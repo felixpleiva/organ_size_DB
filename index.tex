@@ -1,0 +1,2081 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={A systematic map and comprehensive database of invertebrate and vertebrate organ size},
+  pdfauthor={Félix P. Leiva},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{A systematic map and comprehensive database of invertebrate and vertebrate organ size}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Electronic Supplementary Material}
+\author{Félix P. Leiva}
+\date{latest update: 25 June 2025}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{6}
+\tableofcontents
+}
+\section{Welcome}\label{welcome}
+
+This R Markdown document summarises the principal the steps to generate figures and tables using data pertaining to organ sizes across vertebrates and invertebrates species. I employed a systematic map to search for information on organ sizes, body sizes, and a set of metadata (see \textbf{Figure S1}). This approach facilitates a more comprehensive understanding of the database structure and also, will be serve as backbone for the studying scaling of organ sizes among species.
+
+\section{Citation}\label{citation}
+
+When using the data and/or code associated with this project, they should be cited as follows:
+
+\begin{itemize}
+\tightlist
+\item
+  Leiva, F. P., Ockhuijsen L., Polinder, J., Schreyers, L., Xiong, J., Hendriks A. J. (2025). A systematic map and comprehensive database of invertebrate and vertebrate organ size. Zenodo. DOI will be available here soon.
+\end{itemize}
+
+\section{Contact}\label{contact}
+
+This script is authored by \textbf{Félix P. Leiva}. For any questions related to this resource, please contact me at the email address: \href{mailto:felixpleiva@gmail.com}{\textbf{felixpleiva@gmail.com}}.
+
+\section{Disclaimer}\label{disclaimer}
+
+This code routine may contain typographical errors, specific lines of code, or comments in Spanish (my native language). Should you encounter any errors in the code or data, please let me know via email.
+
+\section{Licence}\label{licence}
+
+This repository is provided by the author under the licence \href{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en}{Attribution-NonCommercial-NoDerivatives 4.0 International}.
+
+\section{Clean working space}\label{clean-working-space}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list =} \FunctionTok{ls}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Load libraries}\label{load-libraries}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(kableExtra)       }\CommentTok{\# Enhances tables created with \textquotesingle{}knitr::kable\textquotesingle{}}
+\FunctionTok{library}\NormalTok{(DataExplorer)     }\CommentTok{\# Automates exploratory data analysis}
+\FunctionTok{library}\NormalTok{(dplyr)            }\CommentTok{\# Efficient data manipulation}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:kableExtra':
+## 
+##     group_rows
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)          }\CommentTok{\# Data visualisation based on the grammar of graphics}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ggplot2' was built under R version 4.3.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(RefManageR)       }\CommentTok{\# Manages references and citations}
+\FunctionTok{library}\NormalTok{(ggpubr)           }\CommentTok{\# Creates publication{-}ready graphics}
+\FunctionTok{library}\NormalTok{(cowplot)          }\CommentTok{\# Arranges and annotates plots}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'cowplot'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggpubr':
+## 
+##     get_legend
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidygeocoder)     }\CommentTok{\# Converts addresses into geographic coordinates}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'tidygeocoder' was built under R version 4.3.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rnaturalearth)    }\CommentTok{\# Accesses Natural Earth geographic data}
+\FunctionTok{library}\NormalTok{(ape)              }\CommentTok{\# Analyses phylogenies and evolution}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ape' was built under R version 4.3.3
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'ape'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggpubr':
+## 
+##     rotate
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     where
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggtree)           }\CommentTok{\# Visualises and annotates phylogenetic trees}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## ggtree v3.10.1 For help: https://yulab-smu.top/treedata-book/
+## 
+## If you use the ggtree package suite in published research, please cite
+## the appropriate paper(s):
+## 
+## Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam.
+## ggtree: an R package for visualization and annotation of phylogenetic
+## trees with their covariates and other associated data. Methods in
+## Ecology and Evolution. 2017, 8(1):28-36. doi:10.1111/2041-210X.12628
+## 
+## Shuangbin Xu, Lin Li, Xiao Luo, Meijun Chen, Wenli Tang, Li Zhan, Zehan
+## Dai, Tommy T. Lam, Yi Guan, Guangchuang Yu. Ggtree: A serialized data
+## object for visualization of a phylogenetic tree and annotation data.
+## iMeta 2022, 1(4):e56. doi:10.1002/imt2.56
+## 
+## G Yu. Data Integration, Manipulation and Visualization of Phylogenetic
+## Trees (1st ed.). Chapman and Hall/CRC. 2022. ISBN: 9781032233574
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'ggtree'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ape':
+## 
+##     rotate
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggpubr':
+## 
+##     rotate
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tibble)           }\CommentTok{\# Alternative to data frames}
+\FunctionTok{library}\NormalTok{(ggthemes)         }\CommentTok{\# Additional themes for \textquotesingle{}ggplot2\textquotesingle{} graphics}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'ggthemes'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:cowplot':
+## 
+##     theme_map
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(sessioninfo)      }\CommentTok{\# Documents session environment for reproducibility}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'sessioninfo' was built under R version 4.3.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(details)          }\CommentTok{\# Adds inline or interactive details}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'details' was built under R version 4.3.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(stringr)}
+\FunctionTok{library}\NormalTok{(tidyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'tidyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggtree':
+## 
+##     expand
+\end{verbatim}
+
+\section{Load data}\label{load-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"../outputs/organ\_size\_with\_taxonomy.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Load phylogenetic tree}\label{load-phylogenetic-tree}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree}\OtherTok{\textless{}{-}}\FunctionTok{read.tree}\NormalTok{(}\StringTok{"../outputs/Phylogenetic tree for 363 species.tre"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Load references}\label{load-references}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{refs }\OtherTok{\textless{}{-}} \FunctionTok{ReadBib}\NormalTok{(}\StringTok{"../outputs/Data used in the DB.bib"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Overview of screening steps used to select studies included in the organ size database}\label{overview-of-screening-steps-used-to-select-studies-included-in-the-organ-size-database}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{images/clipboard-375488702.png}}
+\caption{\textbf{Figure S1.} PRISMA-type diagram showing the systematic and non-systematic literature search reporting organ size and body size pairs data. (*) We have not received responses from the corresponding author at the time of the manuscript submission.}
+\end{figure}
+
+\section{Data exploration}\label{data-exploration}
+
+\subsection{Change some species names}\label{change-some-species-names}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Lets change those names}
+
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Ateles chamek"}\NormalTok{]                     }\OtherTok{\textless{}{-}} \StringTok{"Ateles belzebuth chamek"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Leontocebus nigrifrons"}\NormalTok{]            }\OtherTok{\textless{}{-}} \StringTok{"Saguinus fuscicollis nigrifrons"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Terrapene triunguis"}\NormalTok{]               }\OtherTok{\textless{}{-}} \StringTok{"Terrapene carolina triunguis"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Anarhynchus alexandrinus"}\NormalTok{]          }\OtherTok{\textless{}{-}} \StringTok{"Charadrius alexandrinus"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Cebuella pygmaea"}\NormalTok{]                  }\OtherTok{\textless{}{-}} \StringTok{"Callithrix pygmaea"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Dicotyles tajacu"}\NormalTok{]                  }\OtherTok{\textless{}{-}} \StringTok{"Pecari tajacu"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Heteromys salvini"}\NormalTok{]                 }\OtherTok{\textless{}{-}} \StringTok{"Liomys salvini"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Leontocebus fuscicollis"}\NormalTok{]           }\OtherTok{\textless{}{-}} \StringTok{"Saguinus fuscicollis"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Lithobates pipiens"}\NormalTok{]                }\OtherTok{\textless{}{-}} \StringTok{"Rana pipiens"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"pekania pennanti"}\NormalTok{]                  }\OtherTok{\textless{}{-}} \StringTok{"Martes pennanti"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Sephanoides sephaniodes"}\NormalTok{]           }\OtherTok{\textless{}{-}} \StringTok{"Sephanoides sephanoides"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Spodiopsar sericeus"}\NormalTok{]               }\OtherTok{\textless{}{-}} \StringTok{"Sturnus sericeus"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Pekania pennanti"}\NormalTok{]                  }\OtherTok{\textless{}{-}} \StringTok{"Martes pennanti"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Saguinus fuscicollis"}\NormalTok{]              }\OtherTok{\textless{}{-}} \StringTok{"Saguinus fuscicollis fuscicollis"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Presbytis melalophos"}\NormalTok{]              }\OtherTok{\textless{}{-}} \StringTok{"Presbytis melalophos mitrata"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Eulemur fulvus"}\NormalTok{]                    }\OtherTok{\textless{}{-}} \StringTok{"Eulemur fulvus fulvus"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Saimiri sciureus"}\NormalTok{]                  }\OtherTok{\textless{}{-}} \StringTok{"Saimiri sciureus sciureus"}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species[dat}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{"Alouatta seniculus"}\NormalTok{]                }\OtherTok{\textless{}{-}} \StringTok{"Alouatta seniculus seniculus"}
+\end{Highlighting}
+\end{Shaded}
+
+To give an overview and description of the metadata associated with the extraction of organ size and body size data in invertebrates and vertebrates. This table is labeled as \textbf{Table S1} in the manuscript.
+
+\subsection{Check and reformat variables if is needed}\label{check-and-reformat-variables-if-is-needed}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    10605 obs. of  36 variables:
+##  $ species_reported                  : chr  "Abrothrix longipilis" "Abrothrix longipilis" "Abrothrix longipilis" "Abrothrix longipilis" ...
+##  $ initials                          : chr  "FPLeiva" "FPLeiva" "FPLeiva" "FPLeiva" ...
+##  $ key                               : chr  "rayyan-150592721" "rayyan-150592721" "rayyan-150592721" "rayyan-150592721" ...
+##  $ context_study                     : chr  "ecological/evolutionary" "ecological/evolutionary" "ecological/evolutionary" "ecological/evolutionary" ...
+##  $ taxonomic_group                   : chr  "mammal" "mammal" "mammal" "mammal" ...
+##  $ habitat                           : chr  "terrestrial" "terrestrial" "terrestrial" "terrestrial" ...
+##  $ origin                            : chr  "wild" "wild" "wild" "wild" ...
+##  $ season_of_collection              : chr  "autumn" "autumn" "autumn" "autumn" ...
+##  $ lat_dec                           : num  -47.5 -47.5 -47.4 -47.5 -47.4 ...
+##  $ long_dec                          : num  -72.8 -72.8 -71.9 -72.8 -71.9 ...
+##  $ age_years                         : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ life_stage_individual             : chr  NA NA NA NA ...
+##  $ sex_individual                    : chr  NA NA NA NA ...
+##  $ id_cluster                        : int  4 4 2 4 2 3 2 3 4 3 ...
+##  $ trait_size_category               : chr  "body size" "small intestine" "stomach" "caecum" ...
+##  $ weight_status                     : chr  "fresh" "fresh" "fresh" "fresh" ...
+##  $ paired_organs_weighed_individually: chr  NA NA NA NA ...
+##  $ organ_side                        : chr  NA NA NA NA ...
+##  $ trait_details                     : chr  "body weight" "small intestine weight" "stomach weight" "caecum weight" ...
+##  $ trait_unit                        : chr  "g" "g" "g" "g" ...
+##  $ mean_trait                        : num  26.274 0.698 0.375 0.25 1.357 ...
+##  $ error_trait                       : num  2.1934 0.0596 0.0182 0.0601 0.0675 ...
+##  $ error_type                        : chr  "standard_error" "standard_error" "standard_error" "standard_error" ...
+##  $ n_for_mean_trait                  : chr  "26" "26" "21" "26" ...
+##  $ additional_trait                  : chr  NA NA NA NA ...
+##  $ data_source                       : chr  "Figure 4F" "Figure 4C" "Figure 4A" "Figure 4B" ...
+##  $ data_doi                          : chr  NA NA NA NA ...
+##  $ relevant_notes                    : chr  NA NA NA NA ...
+##  $ phylum                            : chr  "Chordata" "Chordata" "Chordata" "Chordata" ...
+##  $ class                             : chr  "Mammalia" "Mammalia" "Mammalia" "Mammalia" ...
+##  $ order                             : chr  "Rodentia" "Rodentia" "Rodentia" "Rodentia" ...
+##  $ family                            : chr  "Cricetidae" "Cricetidae" "Cricetidae" "Cricetidae" ...
+##  $ genus                             : chr  "Abrothrix" "Abrothrix" "Abrothrix" "Abrothrix" ...
+##  $ species                           : chr  "Abrothrix longipilis" "Abrothrix longipilis" "Abrothrix longipilis" "Abrothrix longipilis" ...
+##  $ source                            : chr  "ncbi" "ncbi" "ncbi" "ncbi" ...
+##  $ taxo_level                        : chr  "Species" "Species" "Species" "Species" ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# make a new column of species underscored}
+\NormalTok{dat}\SpecialCharTok{$}\NormalTok{species\_underscored }\OtherTok{\textless{}{-}} \FunctionTok{gsub}\NormalTok{(}\StringTok{" "}\NormalTok{, }\StringTok{"\_"}\NormalTok{, dat}\SpecialCharTok{$}\NormalTok{species)}
+
+\CommentTok{\# Choosing columns I want to convert to factor}
+\NormalTok{columns\_to\_factor }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"species\_reported"}\NormalTok{, }\StringTok{"initials"}\NormalTok{, }\StringTok{"key"}\NormalTok{, }\StringTok{"context\_study"}\NormalTok{, }\StringTok{"taxonomic\_group"}\NormalTok{,}
+  \StringTok{"habitat"}\NormalTok{, }\StringTok{"origin"}\NormalTok{, }\StringTok{"season\_of\_collection"}\NormalTok{, }\StringTok{"life\_stage\_individual"}\NormalTok{,}
+  \StringTok{"sex\_individual"}\NormalTok{, }\StringTok{"id\_cluster"}\NormalTok{, }\StringTok{"trait\_size\_category"}\NormalTok{, }\StringTok{"weight\_status"}\NormalTok{,}
+  \StringTok{"paired\_organs\_weighed\_individually"}\NormalTok{, }\StringTok{"organ\_side"}\NormalTok{, }\StringTok{"trait\_details"}\NormalTok{,}
+  \StringTok{"trait\_unit"}\NormalTok{, }\StringTok{"error\_type"}\NormalTok{, }\StringTok{"additional\_trait"}\NormalTok{, }\StringTok{"data\_source"}\NormalTok{, }\StringTok{"data\_doi"}\NormalTok{,}
+  \StringTok{"phylum"}\NormalTok{, }\StringTok{"class"}\NormalTok{, }\StringTok{"order"}\NormalTok{, }\StringTok{"family"}\NormalTok{, }\StringTok{"genus"}\NormalTok{, }\StringTok{"species"}\NormalTok{, }\StringTok{"source"}\NormalTok{,}
+  \StringTok{"taxo\_level"}\NormalTok{, }\StringTok{"species\_underscored"}
+\NormalTok{)}
+
+\CommentTok{\# Convert columns to factor}
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(columns\_to\_factor), as.factor))}
+
+\CommentTok{\# Convert column to numeric}
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mean\_trait =} \FunctionTok{as.numeric}\NormalTok{(mean\_trait))}
+
+\CommentTok{\# check again}
+\FunctionTok{str}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    10605 obs. of  37 variables:
+##  $ species_reported                  : Factor w/ 380 levels "Abrothrix longipilis",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ initials                          : Factor w/ 1 level "FPLeiva": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ key                               : Factor w/ 235 levels "rayyan-150591684",..: 158 158 158 158 158 158 158 158 158 158 ...
+##  $ context_study                     : Factor w/ 6 levels "animal health",..: 4 4 4 4 4 4 4 4 4 4 ...
+##  $ taxonomic_group                   : Factor w/ 7 levels "amphibian","bird",..: 6 6 6 6 6 6 6 6 6 6 ...
+##  $ habitat                           : Factor w/ 3 levels "freshwater","marine",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ origin                            : Factor w/ 6 levels "captive","commercial",..: 6 6 6 6 6 6 6 6 6 6 ...
+##  $ season_of_collection              : Factor w/ 4 levels "autumn","spring",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ lat_dec                           : num  -47.5 -47.5 -47.4 -47.5 -47.4 ...
+##  $ long_dec                          : num  -72.8 -72.8 -71.9 -72.8 -71.9 ...
+##  $ age_years                         : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ life_stage_individual             : Factor w/ 13 levels "adult","elderly",..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ sex_individual                    : Factor w/ 3 levels "both","female",..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ id_cluster                        : Factor w/ 360 levels "1","2","3","4",..: 4 4 2 4 2 3 2 3 4 3 ...
+##  $ trait_size_category               : Factor w/ 54 levels "adipose depot",..: 4 46 48 8 31 28 4 48 48 31 ...
+##  $ weight_status                     : Factor w/ 4 levels "dried","fixed",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ paired_organs_weighed_individually: Factor w/ 2 levels "no","yes": NA NA NA NA NA NA NA NA NA NA ...
+##  $ organ_side                        : Factor w/ 2 levels "left","right": NA NA NA NA NA NA NA NA NA NA ...
+##  $ trait_details                     : Factor w/ 443 levels "abdominal fat",..: 14 360 380 37 187 153 14 380 380 187 ...
+##  $ trait_unit                        : Factor w/ 16 levels "% of body weight",..: 6 6 6 6 6 6 6 6 6 6 ...
+##  $ mean_trait                        : num  26.274 0.698 0.375 0.25 1.357 ...
+##  $ error_trait                       : num  2.1934 0.0596 0.0182 0.0601 0.0675 ...
+##  $ error_type                        : Factor w/ 3 levels "confidence_interval",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ n_for_mean_trait                  : chr  "26" "26" "21" "26" ...
+##  $ additional_trait                  : Factor w/ 3 levels "individual metabolic rates",..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ data_source                       : Factor w/ 80 levels "archived raw data",..: 42 39 35 37 41 40 42 35 35 41 ...
+##  $ data_doi                          : Factor w/ 5 levels "10.5061/\ndryad.6djh9w13b",..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ relevant_notes                    : chr  NA NA NA NA ...
+##  $ phylum                            : Factor w/ 3 levels "Arthropoda","Chordata",..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ class                             : Factor w/ 8 levels "Actinopterygii",..: 7 7 7 7 7 7 7 7 7 7 ...
+##  $ order                             : Factor w/ 60 levels "Accipitriformes",..: 48 48 48 48 48 48 48 48 48 48 ...
+##  $ family                            : Factor w/ 133 levels "Accipitridae",..: 30 30 30 30 30 30 30 30 30 30 ...
+##  $ genus                             : Factor w/ 267 levels "Abrothrix","Acomys",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ species                           : Factor w/ 366 levels "Abrothrix longipilis",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ source                            : Factor w/ 3 levels "gbif","itis",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ taxo_level                        : Factor w/ 1 level "Species": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ species_underscored               : Factor w/ 366 levels "Abrothrix_longipilis",..: 1 1 1 1 1 1 1 1 1 1 ...
+\end{verbatim}
+
+\subsection{Grouping of organs}\label{grouping-of-organs}
+
+In the code below, we will attempt to group the different types of organs included in our database to improve visualisation across the various figures. As we see below, there 53 distinct organ types.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check the organ names}
+\FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{trait\_size\_category))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 54
+\end{verbatim}
+
+However, some of these actually represent the same organ type.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check the organ names}
+\FunctionTok{unique}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{trait\_size\_category)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] body size                       small intestine                
+##  [3] stomach                         caecum                         
+##  [5] liver                           intestine                      
+##  [7] brain                           spleen                         
+##  [9] adipose depot                   heart                          
+## [11] digestive tract                 kidney                         
+## [13] central nervous system          skeleton                       
+## [15] musculature                     reproductive system            
+## [17] digestive system                circulatory system and fat body
+## [19] malpighian tubules              ileum                          
+## [21] duodenum                        gizzard                        
+## [23] muscle                          jejunum                        
+## [25] lung                            ventricle                      
+## [27] rectum                          colon                          
+## [29] esophagus                       thymus                         
+## [31] bursa                           testes                         
+## [33] thyroid/parathyroid glands      salt gland                     
+## [35] harderian gland                 ovary                          
+## [37] pancreas                        adrenal glands                 
+## [39] fat                             proventriculus                 
+## [41] gonad                           bone                           
+## [43] gill                            uterus                         
+## [45] prostate gland                  pituitary gland                
+## [47] oviduct                         fore limb                      
+## [49] hind limb                       electric organ                 
+## [51] epididymides                    gut                            
+## [53] ureter                          bladder                        
+## 54 Levels: adipose depot adrenal glands bladder body size bone brain ... ventricle
+\end{verbatim}
+
+\subsection{System categories}\label{system-categories}
+
+This happened because during data extraction, I retained the original organ names as reported in the studies.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Add system column using case\_when}
+\NormalTok{dat }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{system =} \FunctionTok{case\_when}\NormalTok{(}
+    \CommentTok{\# Digestive system}
+\NormalTok{    trait\_size\_category }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"liver"}\NormalTok{, }\StringTok{"caecum"}\NormalTok{, }\StringTok{"intestine"}\NormalTok{, }\StringTok{"stomach"}\NormalTok{, }
+                              \StringTok{"digestive tract"}\NormalTok{, }\StringTok{"digestive system"}\NormalTok{,}
+                              \StringTok{"jejunum"}\NormalTok{, }\StringTok{"duodenum"}\NormalTok{, }\StringTok{"gizzard"}\NormalTok{, }\StringTok{"ileum"}\NormalTok{,}
+                              \StringTok{"esophagus"}\NormalTok{, }\StringTok{"colon"}\NormalTok{, }\StringTok{"rectum"}\NormalTok{, }\StringTok{"proventriculus"}\NormalTok{,}
+                              \StringTok{"gut"}\NormalTok{, }\StringTok{"pancreas"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Digestive"}\NormalTok{,}
+    
+    \CommentTok{\# Excretory system}
+\NormalTok{    trait\_size\_category }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"kidney"}\NormalTok{, }\StringTok{"malpighian tubules"}\NormalTok{, }\StringTok{"ureter"}\NormalTok{, }
+                              \StringTok{"bladder"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Excretory"}\NormalTok{,}
+    
+    \CommentTok{\# Circulatory system}
+\NormalTok{    trait\_size\_category }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"heart"}\NormalTok{, }\StringTok{"ventricle"}\NormalTok{, }\StringTok{"circulatory system and fat body"}\NormalTok{,}
+                              \StringTok{"spleen"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Circulatory"}\NormalTok{,}
+    
+    \CommentTok{\# Immune system}
+\NormalTok{    trait\_size\_category }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"thymus"}\NormalTok{, }\StringTok{"bursa"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Immune"}\NormalTok{,}
+    
+    \CommentTok{\# Nervous system}
+\NormalTok{    trait\_size\_category }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"brain"}\NormalTok{, }\StringTok{"central nervous system"}\NormalTok{, }
+                              \StringTok{"pituitary gland"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Nervous"}\NormalTok{,}
+    
+    \CommentTok{\# Endocrine system}
+\NormalTok{    trait\_size\_category }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"thyroid/parathyroid glands"}\NormalTok{, }\StringTok{"adrenal glands"}\NormalTok{,}
+                              \StringTok{"harderian gland"}\NormalTok{, }\StringTok{"salt gland"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Endocrine"}\NormalTok{,}
+    
+    \CommentTok{\# Respiratory system}
+\NormalTok{    trait\_size\_category }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"lung"}\NormalTok{, }\StringTok{"gill"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Respiratory"}\NormalTok{,}
+    
+    \CommentTok{\# Reproductive system}
+\NormalTok{    trait\_size\_category }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"ovary"}\NormalTok{, }\StringTok{"testes"}\NormalTok{, }\StringTok{"gonad"}\NormalTok{, }\StringTok{"uterus"}\NormalTok{, }
+                              \StringTok{"prostate gland"}\NormalTok{, }\StringTok{"oviduct"}\NormalTok{, }\StringTok{"epididymides"}\NormalTok{,}
+                              \StringTok{"reproductive system"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Reproductive"}\NormalTok{,}
+    
+    \CommentTok{\# Musculoskeletal system}
+\NormalTok{    trait\_size\_category }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"skeleton"}\NormalTok{, }\StringTok{"bone"}\NormalTok{, }\StringTok{"hind limb"}\NormalTok{, }\StringTok{"fore limb"}\NormalTok{,}
+                              \StringTok{"muscle"}\NormalTok{, }\StringTok{"musculature"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Musculoskeletal"}\NormalTok{,}
+    
+    \CommentTok{\# Adipose/fat storage}
+\NormalTok{    trait\_size\_category }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"adipose depot"}\NormalTok{, }\StringTok{"fat"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Adipose tissue"}\NormalTok{,}
+    
+    \CommentTok{\# Default category for anything not matched}
+    \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \StringTok{"Body size"}
+\NormalTok{  ))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create summary table with group totals}
+\NormalTok{summary\_table }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{count}\NormalTok{(system, trait\_size\_category) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(system, trait\_size\_category) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Add group totals}
+  \FunctionTok{bind\_rows}\NormalTok{(}
+\NormalTok{    dat }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{count}\NormalTok{(system, }\AttributeTok{name =} \StringTok{"n"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{mutate}\NormalTok{(}\AttributeTok{trait\_size\_category =} \StringTok{"TOTAL"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{select}\NormalTok{(system, trait\_size\_category, n)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(system, trait\_size\_category }\SpecialCharTok{!=} \StringTok{"TOTAL"}\NormalTok{, trait\_size\_category)}
+\end{Highlighting}
+\end{Shaded}
+
+Lets check the grouping
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# make a table to see the number of organs measured in each system}
+\FunctionTok{kable}\NormalTok{(summary\_table, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"System"}\NormalTok{, }\StringTok{"Organ"}\NormalTok{, }\StringTok{"Count"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\StringTok{"striped"}\NormalTok{, }\AttributeTok{position =} \StringTok{"left"}\NormalTok{, }\AttributeTok{full\_width =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{row\_spec}\NormalTok{(}\FunctionTok{which}\NormalTok{(summary\_table}\SpecialCharTok{$}\NormalTok{trait\_size\_category }\SpecialCharTok{==} \StringTok{"TOTAL"}\NormalTok{), }\AttributeTok{bold =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{background =} \StringTok{"\#f5f5f5"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{scroll\_box}\NormalTok{(}\AttributeTok{width =} \StringTok{"100\%"}\NormalTok{, }\AttributeTok{height =} \StringTok{"500px"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+## Warning in latex_new_row_builder(target_row, table_info, bold, italic,
+## monospace, : Setting full_width = TRUE will turn the table into a tabu
+## environment where colors are not really easily configable with this package.
+## Please consider turn off full_width.
+\end{verbatim}
+
+\begin{tabu} to \linewidth {>{\raggedright}X>{\raggedright}X>{\raggedleft}X}
+\hline
+System & Organ & Count\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Adipose tissue}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{155}}\\
+\hline
+Adipose tissue & adipose depot & 108\\
+\hline
+Adipose tissue & fat & 47\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Body size}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{3660}}\\
+\hline
+Body size & body size & 3210\\
+\hline
+Body size & electric organ & 60\\
+\hline
+Body size & small intestine & 390\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Circulatory}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{988}}\\
+\hline
+Circulatory & circulatory system and fat body & 18\\
+\hline
+Circulatory & heart & 511\\
+\hline
+Circulatory & spleen & 307\\
+\hline
+Circulatory & ventricle & 152\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Digestive}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{2593}}\\
+\hline
+Digestive & caecum & 289\\
+\hline
+Digestive & colon & 27\\
+\hline
+Digestive & digestive system & 18\\
+\hline
+Digestive & digestive tract & 117\\
+\hline
+Digestive & duodenum & 17\\
+\hline
+Digestive & esophagus & 15\\
+\hline
+Digestive & gizzard & 163\\
+\hline
+Digestive & gut & 88\\
+\hline
+Digestive & ileum & 13\\
+\hline
+Digestive & intestine & 656\\
+\hline
+Digestive & jejunum & 15\\
+\hline
+Digestive & liver & 741\\
+\hline
+Digestive & pancreas & 53\\
+\hline
+Digestive & proventriculus & 26\\
+\hline
+Digestive & rectum & 23\\
+\hline
+Digestive & stomach & 332\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Endocrine}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{183}}\\
+\hline
+Endocrine & adrenal glands & 90\\
+\hline
+Endocrine & harderian gland & 21\\
+\hline
+Endocrine & salt gland & 40\\
+\hline
+Endocrine & thyroid/parathyroid glands & 32\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Excretory}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{461}}\\
+\hline
+Excretory & bladder & 2\\
+\hline
+Excretory & kidney & 439\\
+\hline
+Excretory & malpighian tubules & 16\\
+\hline
+Excretory & ureter & 4\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Immune}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{101}}\\
+\hline
+Immune & bursa & 41\\
+\hline
+Immune & thymus & 60\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Musculoskeletal}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{1136}}\\
+\hline
+Musculoskeletal & bone & 479\\
+\hline
+Musculoskeletal & fore limb & 112\\
+\hline
+Musculoskeletal & hind limb & 112\\
+\hline
+Musculoskeletal & muscle & 395\\
+\hline
+Musculoskeletal & musculature & 18\\
+\hline
+Musculoskeletal & skeleton & 20\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Nervous}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{490}}\\
+\hline
+Nervous & brain & 436\\
+\hline
+Nervous & central nervous system & 33\\
+\hline
+Nervous & pituitary gland & 21\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Reproductive}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{457}}\\
+\hline
+Reproductive & epididymides & 13\\
+\hline
+Reproductive & gonad & 55\\
+\hline
+Reproductive & ovary & 149\\
+\hline
+Reproductive & oviduct & 5\\
+\hline
+Reproductive & prostate gland & 8\\
+\hline
+Reproductive & reproductive system & 17\\
+\hline
+Reproductive & testes & 197\\
+\hline
+Reproductive & uterus & 13\\
+\hline
+\cellcolor[HTML]{f5f5f5}{\textbf{Respiratory}} & \cellcolor[HTML]{f5f5f5}{\textbf{TOTAL}} & \cellcolor[HTML]{f5f5f5}{\textbf{381}}\\
+\hline
+Respiratory & gill & 165\\
+\hline
+Respiratory & lung & 216\\
+\hline
+\end{tabu}
+
+\section{Figure 1. Cumulative number of studies and most common journals}\label{figure-1.-cumulative-number-of-studies-and-most-common-journals}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Panel A: Extracting and cleaning publication years}
+
+\NormalTok{df\_years }\OtherTok{\textless{}{-}}\NormalTok{ refs }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(year))) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# Ensure year is numeric}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(year))  }\CommentTok{\# Remove NA values}
+
+\CommentTok{\# Counting studies per year and calculating cumulative values:}
+\NormalTok{studies\_per\_year }\OtherTok{\textless{}{-}}\NormalTok{ df\_years }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{num\_studies =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{cumulative\_studies =} \FunctionTok{cumsum}\NormalTok{(num\_studies))  }\CommentTok{\# Calculate cumulative count}
+
+\CommentTok{\# Plotting the cumulative number of studies:}
+\NormalTok{plot\_years }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ggplot}\NormalTok{(studies\_per\_year, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ cumulative\_studies)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#009E73"}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{250}\NormalTok{)) }\SpecialCharTok{+}  \CommentTok{\# Limit the y{-}axis to 400}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}
+    \AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{1955}\NormalTok{, }\DecValTok{2024}\NormalTok{),}
+    \AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{1960}\NormalTok{, }\DecValTok{2024}\NormalTok{, }\AttributeTok{by =} \DecValTok{12}\NormalTok{)  }\CommentTok{\# Set x{-}axis intervals to 55 years}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Publication Year"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Number of Studies"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_pubr}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{)}
+\NormalTok{  )}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# lets reformat the names of the journal to have to count them and then plot}
+\NormalTok{df\_journals }\OtherTok{\textless{}{-}}\NormalTok{ refs }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(journal) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(journal)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{journal\_clean =} \FunctionTok{tolower}\NormalTok{(journal),}
+    \AttributeTok{journal\_clean =} \FunctionTok{str\_replace\_all}\NormalTok{(journal\_clean, }\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}}\StringTok{\&"}\NormalTok{, }\StringTok{"\&"}\NormalTok{),}
+    \AttributeTok{journal\_clean =} \FunctionTok{str\_squish}\NormalTok{(journal\_clean),}
+    \AttributeTok{journal\_clean =} \FunctionTok{str\_to\_title}\NormalTok{(journal\_clean),}
+    \AttributeTok{journal\_clean =} \FunctionTok{str\_replace\_all}\NormalTok{(}
+\NormalTok{      journal\_clean,}
+      \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{b(Of|And|In|On|For|The|A|An|To|With|By|At|From|But|Or|Nor)}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{b"}\NormalTok{,}
+      \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{tolower}\NormalTok{(x)}
+\NormalTok{    ),}
+    \AttributeTok{journal\_clean =} \FunctionTok{sub}\NormalTok{(}\StringTok{"\^{}([a{-}z])"}\NormalTok{, }\FunctionTok{toupper}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{1"}\NormalTok{), journal\_clean)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(journal\_clean))}
+
+\NormalTok{df\_journals }\OtherTok{\textless{}{-}}\NormalTok{ df\_journals }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(journal\_clean) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{num\_articles =} \FunctionTok{n}\NormalTok{(), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(num\_articles)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice\_head}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_journals }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(df\_journals, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(journal\_clean, num\_articles), }\AttributeTok{y =}\NormalTok{ num\_articles)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#009E73"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{50}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_pubr}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Journals"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Number of Studies"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{()}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ journal\_clean), }\AttributeTok{hjust =} \DecValTok{0}\NormalTok{, }\AttributeTok{vjust =} \FloatTok{0.5}\NormalTok{, }
+            \AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{check\_overlap =} \ConstantTok{TRUE}\NormalTok{, }
+            \AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.7}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ num\_articles), }
+            \AttributeTok{hjust =} \DecValTok{2}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{)}
+\CommentTok{\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\CommentTok{\# Combining Panel A and Panel B}
+\NormalTok{Figure\_1 }\OtherTok{\textless{}{-}} \FunctionTok{plot\_grid}\NormalTok{(}
+\NormalTok{  plot\_years, }
+\NormalTok{  plot\_journals,}
+  \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{),}
+  \AttributeTok{nrow =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{ncol =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{label\_size =} \DecValTok{15}\NormalTok{,}
+  \AttributeTok{align =} \StringTok{"v"}\NormalTok{)}
+
+\NormalTok{Figure\_1}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-14-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Saving the combined figure}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_1\_Studies\_and\_Journals.pdf\textquotesingle{}}\NormalTok{, Figure\_1, }\AttributeTok{width =} \DecValTok{6}\NormalTok{, }\AttributeTok{height =} \DecValTok{9}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_1\_Studies\_and\_Journals.png\textquotesingle{}}\NormalTok{, Figure\_1, }\AttributeTok{width =} \DecValTok{6}\NormalTok{, }\AttributeTok{height =} \DecValTok{9}\NormalTok{, }\AttributeTok{dpi =} \DecValTok{1200}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Figure 2: Number of studies by study context, origin and season of collection}\label{figure-2-number-of-studies-by-study-context-origin-and-season-of-collection}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate the number of unique studies by each categorical variable}
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(context\_study, origin, season\_of\_collection) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{unique\_studies =} \FunctionTok{n\_distinct}\NormalTok{(key), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}
+    \AttributeTok{cols =} \SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(unique\_studies),}
+    \AttributeTok{names\_to =} \StringTok{"variable"}\NormalTok{,}
+    \AttributeTok{values\_to =} \StringTok{"level"}
+\NormalTok{  )}
+
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ plot\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{variable =} \FunctionTok{recode}\NormalTok{(variable,}
+                           \AttributeTok{context\_study =} \StringTok{"Study context"}\NormalTok{,}
+                           \AttributeTok{origin =} \StringTok{"Source of specimens"}\NormalTok{,}
+                           \AttributeTok{season\_of\_collection =} \StringTok{"Season of collection"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(variable, level) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{unique\_studies =} \FunctionTok{sum}\NormalTok{(unique\_studies), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
+
+\CommentTok{\# rename the NA level as "not reported"}
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ plot\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{level =} \FunctionTok{if\_else}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(level), }\StringTok{"not reported"}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(level)))}
+
+\CommentTok{\#  reorder the levels}
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ plot\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{variable =} \FunctionTok{factor}\NormalTok{(}
+\NormalTok{      variable,}
+      \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Study context"}\NormalTok{, }\StringTok{"Source of specimens"}\NormalTok{, }\StringTok{"Season of collection"}\NormalTok{)}
+\NormalTok{    )}
+\NormalTok{  )}
+
+\NormalTok{Figure\_2 }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ggplot}\NormalTok{(plot\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(level, unique\_studies), }\AttributeTok{y =}\NormalTok{ unique\_studies)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#009E73"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# Add number of studies inside the bars}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ unique\_studies), }
+            \AttributeTok{hjust =} \SpecialCharTok{{-}}\FloatTok{0.15}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{250}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ variable, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_pubr}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,  }\CommentTok{\# Remove x axis label}
+    \AttributeTok{y =} \StringTok{"Number of studies"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{9}\NormalTok{),}
+    \AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{10}\NormalTok{),}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{),}
+    \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{),}
+    \AttributeTok{strip.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#B2ABD270"}\NormalTok{, }\AttributeTok{colour =} \StringTok{"transparent"}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{0}\NormalTok{),}
+    \AttributeTok{panel.spacing =} \FunctionTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{, }\StringTok{"lines"}\NormalTok{)}
+\NormalTok{  )}
+
+\NormalTok{Figure\_2}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-15-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# \# Store Plots}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_2\_Studies\_by\_Factors.pdf\textquotesingle{}}\NormalTok{, Figure\_2, }\AttributeTok{width =} \DecValTok{15}\SpecialCharTok{/}\FloatTok{1.2}\NormalTok{, }\AttributeTok{height =} \DecValTok{4}\SpecialCharTok{/}\FloatTok{1.2}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_2\_Studies\_by\_Factors.png\textquotesingle{}}\NormalTok{, Figure\_2, }\AttributeTok{width =} \DecValTok{15}\SpecialCharTok{/}\FloatTok{1.2}\NormalTok{, }\AttributeTok{height =} \DecValTok{4}\SpecialCharTok{/}\FloatTok{1.2}\NormalTok{, }\AttributeTok{dpi =} \DecValTok{1200}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Figure 3: Number of studies by habitat, life stage and sex}\label{figure-3-number-of-studies-by-habitat-life-stage-and-sex}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Calculate the number of unique studies by each categorical variable}
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(sex\_individual, life\_stage\_individual, habitat) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{unique\_studies =} \FunctionTok{n\_distinct}\NormalTok{(key), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}
+    \AttributeTok{cols =} \SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(unique\_studies),}
+    \AttributeTok{names\_to =} \StringTok{"variable"}\NormalTok{,}
+    \AttributeTok{values\_to =} \StringTok{"level"}
+\NormalTok{  )}
+
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ plot\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{variable =} \FunctionTok{recode}\NormalTok{(variable,}
+                           \AttributeTok{habitat =} \StringTok{"Habitat"}\NormalTok{,}
+                           \AttributeTok{sex\_individual =} \StringTok{"Sex studied"}\NormalTok{,}
+                           \AttributeTok{life\_stage\_individual =} \StringTok{"Life stage studied"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(variable, level) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{unique\_studies =} \FunctionTok{sum}\NormalTok{(unique\_studies), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
+
+\CommentTok{\# rename the NA level as "not reported"}
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ plot\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{level =} \FunctionTok{if\_else}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(level), }\StringTok{"not reported"}\NormalTok{, }\FunctionTok{as.character}\NormalTok{(level)))}
+
+\CommentTok{\#  reorder the levels}
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ plot\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{variable =} \FunctionTok{factor}\NormalTok{(}
+\NormalTok{      variable,}
+      \AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Habitat"}\NormalTok{, }\StringTok{"Life stage studied"}\NormalTok{, }\StringTok{"Sex studied"}\NormalTok{)}
+\NormalTok{    )}
+\NormalTok{  )}
+
+\NormalTok{Figure\_3 }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ggplot}\NormalTok{(plot\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(level, unique\_studies), }\AttributeTok{y =}\NormalTok{ unique\_studies)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#009E73"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# Add number of studies inside the bars}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ unique\_studies), }
+            \AttributeTok{hjust =} \SpecialCharTok{{-}}\FloatTok{0.15}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{300}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ variable, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_pubr}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,  }\CommentTok{\# Remove x axis label}
+    \AttributeTok{y =} \StringTok{"Number of studies"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{9}\NormalTok{),}
+    \AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{10}\NormalTok{),}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{),}
+    \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{),}
+    \AttributeTok{strip.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#B2ABD270"}\NormalTok{, }\AttributeTok{colour =} \StringTok{"transparent"}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{0}\NormalTok{),}
+    \AttributeTok{panel.spacing =} \FunctionTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{, }\StringTok{"lines"}\NormalTok{)}
+\NormalTok{  )}
+
+\NormalTok{Figure\_3}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-16-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# \# Store Plots}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_3\_Studies\_by\_Factors.pdf\textquotesingle{}}\NormalTok{, Figure\_3, }\AttributeTok{width =} \DecValTok{15}\SpecialCharTok{/}\FloatTok{1.5}\NormalTok{, }\AttributeTok{height =} \DecValTok{4}\SpecialCharTok{/}\FloatTok{1.5}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_3\_Studies\_by\_Factors.png\textquotesingle{}}\NormalTok{, Figure\_3, }\AttributeTok{width =} \DecValTok{15}\SpecialCharTok{/}\FloatTok{1.5}\NormalTok{, }\AttributeTok{height =} \DecValTok{4}\SpecialCharTok{/}\FloatTok{1.5}\NormalTok{, }\AttributeTok{dpi =} \DecValTok{1200}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Figure 4: Studies by class and most common species in the database}\label{figure-4-studies-by-class-and-most-common-species-in-the-database}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_studies }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(class) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{unique\_studies =} \FunctionTok{n\_distinct}\NormalTok{(key), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
+
+\NormalTok{Figure\_4a }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ggplot}\NormalTok{(data\_studies, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(class, unique\_studies), }\AttributeTok{y =}\NormalTok{ unique\_studies)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#009E73"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ unique\_studies), }\AttributeTok{hjust =} \SpecialCharTok{{-}}\FloatTok{0.15}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_pubr}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{150}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{y =} \StringTok{"Number of studies"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{9}\NormalTok{),}
+    \AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{11}\NormalTok{),}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{),}
+    \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{),}
+    \AttributeTok{strip.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#B2ABD270"}\NormalTok{, }\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{),}
+    \AttributeTok{panel.spacing =} \FunctionTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{, }\StringTok{"lines"}\NormalTok{)}
+\NormalTok{  )}
+
+\CommentTok{\# plot most studies species}
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{num\_studies =} \FunctionTok{n\_distinct}\NormalTok{(key), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(num\_studies)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{slice\_head}\NormalTok{(}\AttributeTok{n =} \DecValTok{10}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \CommentTok{\# Reemplazar espacio por \textasciitilde{} para que ggplot2 lo interprete bien}
+    \AttributeTok{species\_italic =} \FunctionTok{gsub}\NormalTok{(}\StringTok{" "}\NormalTok{, }\StringTok{"\textasciitilde{}\textasciitilde{}"}\NormalTok{, species),}
+    \CommentTok{\# Crear expresión para cursiva}
+    \AttributeTok{species\_italic =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"italic(\textquotesingle{}"}\NormalTok{, }\FunctionTok{gsub}\NormalTok{(}\StringTok{" "}\NormalTok{, }\StringTok{" "}\NormalTok{, species), }\StringTok{"\textquotesingle{})"}\NormalTok{),}
+    \CommentTok{\# Alternativamente, para separar género y especie en cursiva sin comillas:}
+    \AttributeTok{species\_italic =} \FunctionTok{gsub}\NormalTok{(}\StringTok{" "}\NormalTok{, }\StringTok{"\textasciitilde{}\textasciitilde{}"}\NormalTok{, species),}
+    \AttributeTok{species\_italic =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"italic("}\NormalTok{, species\_italic, }\StringTok{")"}\NormalTok{)}
+\NormalTok{  )}
+
+\CommentTok{\# Graficar con nombres en cursiva}
+\NormalTok{Figure\_4b }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(plot\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(species\_italic, num\_studies), }\AttributeTok{y =}\NormalTok{ num\_studies)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#009E73"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ num\_studies), }\AttributeTok{hjust =} \SpecialCharTok{{-}}\FloatTok{0.15}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_pubr}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{150}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{y =} \StringTok{"Number of studies"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{9}\NormalTok{),}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{),}
+    \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{labels =} \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{parse}\NormalTok{(}\AttributeTok{text =}\NormalTok{ x))}
+
+\CommentTok{\# Combining Panel 4A and Panel 4B}
+\NormalTok{Figure\_4 }\OtherTok{\textless{}{-}} \FunctionTok{plot\_grid}\NormalTok{(}
+\NormalTok{  Figure\_4a, }
+\NormalTok{  Figure\_4b,}
+  \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{),}
+  \AttributeTok{nrow =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{ncol =} \DecValTok{1}\NormalTok{,}
+  \AttributeTok{label\_size =} \DecValTok{15}\NormalTok{,}
+  \AttributeTok{align =} \StringTok{"v"}\NormalTok{)}
+
+\NormalTok{Figure\_4}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-17-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Store Plots}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_4\_Most\_common\_species.pdf\textquotesingle{}}\NormalTok{, Figure\_4, }\AttributeTok{width =} \DecValTok{6}\NormalTok{, }\AttributeTok{height =} \DecValTok{9}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_4\_Most\_common\_species.png\textquotesingle{}}\NormalTok{, Figure\_4, }\AttributeTok{width =} \DecValTok{6}\NormalTok{, }\AttributeTok{height =} \DecValTok{9}\NormalTok{, }\AttributeTok{dpi =} \DecValTok{1200}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Figure 5: Number of studies by system}\label{figure-5-number-of-studies-by-system}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(system) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{unique\_studies =} \FunctionTok{n\_distinct}\NormalTok{(key), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}
+    \AttributeTok{cols =} \SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(unique\_studies),}
+    \AttributeTok{names\_to =} \StringTok{"variable"}\NormalTok{,}
+    \AttributeTok{values\_to =} \StringTok{"level"}
+\NormalTok{)}
+
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ plot\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{variable =} \FunctionTok{recode}\NormalTok{(variable,}
+                           \AttributeTok{system =} \StringTok{"System studied"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(variable, level) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{unique\_studies =} \FunctionTok{sum}\NormalTok{(unique\_studies), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
+
+\CommentTok{\# Create plot with panel borders}
+\NormalTok{Figure\_5 }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ggplot}\NormalTok{(plot\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(level, unique\_studies), }\AttributeTok{y =}\NormalTok{ unique\_studies)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#009E73"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \CommentTok{\# Add number of studies inside the bars}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ unique\_studies), }
+            \AttributeTok{hjust =} \SpecialCharTok{{-}}\FloatTok{0.15}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ variable, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_pubr}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+     \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,  }\CommentTok{\# Remove x axis label}
+    \AttributeTok{y =} \StringTok{"Number of studies"}
+\NormalTok{  ) }\SpecialCharTok{+}
+ \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{9}\NormalTok{),}
+    \AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{),}
+    \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{),}
+    \AttributeTok{strip.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#B2ABD270"}\NormalTok{, }\AttributeTok{colour =} \StringTok{"transparent"}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{0}\NormalTok{),}
+    \AttributeTok{panel.spacing =} \FunctionTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{, }\StringTok{"lines"}\NormalTok{)}
+\NormalTok{  )}
+
+\NormalTok{Figure\_5}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-18-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# \# Store Plots}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_5\_Studies\_by\_system.pdf\textquotesingle{}}\NormalTok{, Figure\_5, }\AttributeTok{width =} \DecValTok{7}\NormalTok{, }\AttributeTok{height =} \DecValTok{7}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_5\_Studies\_by\_system.png\textquotesingle{}}\NormalTok{, Figure\_5, }\AttributeTok{width =} \DecValTok{7}\NormalTok{, }\AttributeTok{height =} \DecValTok{7}\NormalTok{, }\AttributeTok{dpi =} \DecValTok{1200}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Figure 6: Phylogeny of species included in the DB with studies}\label{figure-6-phylogeny-of-species-included-in-the-db-with-studies}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Summaries data: calculate the mean value per species for each trait}
+\FunctionTok{names}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "species_reported"                   "initials"                          
+##  [3] "key"                                "context_study"                     
+##  [5] "taxonomic_group"                    "habitat"                           
+##  [7] "origin"                             "season_of_collection"              
+##  [9] "lat_dec"                            "long_dec"                          
+## [11] "age_years"                          "life_stage_individual"             
+## [13] "sex_individual"                     "id_cluster"                        
+## [15] "trait_size_category"                "weight_status"                     
+## [17] "paired_organs_weighed_individually" "organ_side"                        
+## [19] "trait_details"                      "trait_unit"                        
+## [21] "mean_trait"                         "error_trait"                       
+## [23] "error_type"                         "n_for_mean_trait"                  
+## [25] "additional_trait"                   "data_source"                       
+## [27] "data_doi"                           "relevant_notes"                    
+## [29] "phylum"                             "class"                             
+## [31] "order"                              "family"                            
+## [33] "genus"                              "species"                           
+## [35] "source"                             "taxo_level"                        
+## [37] "species_underscored"                "system"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{summary\_data }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{count}\NormalTok{(species\_underscored, system) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# Count occurrences by species and system}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{presence =} \FunctionTok{if\_else}\NormalTok{(n }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{, }\StringTok{"Yes"}\NormalTok{, }\StringTok{"No"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# Convert counts to "Yes"/"No"}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{n) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# Remove the original count column}
+  \FunctionTok{pivot\_wider}\NormalTok{(}
+    \AttributeTok{names\_from =}\NormalTok{ system,                   }\CommentTok{\# Each system becomes a column}
+    \AttributeTok{values\_from =}\NormalTok{ presence,                }\CommentTok{\# Values are now "Yes" or "No"}
+    \AttributeTok{values\_fill =} \FunctionTok{list}\NormalTok{(}\AttributeTok{presence =} \StringTok{"No"}\NormalTok{)    }\CommentTok{\# Fill missing combinations with "No"}
+\NormalTok{  )}
+
+\NormalTok{summary\_data }\OtherTok{\textless{}{-}}\NormalTok{ summary\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\StringTok{\textasciigrave{}}\AttributeTok{Body size}\StringTok{\textasciigrave{}}\NormalTok{)}
+
+\FunctionTok{names}\NormalTok{(summary\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "species_underscored" "Digestive"           "Adipose tissue"     
+##  [4] "Circulatory"         "Excretory"           "Nervous"            
+##  [7] "Musculoskeletal"     "Reproductive"        "Respiratory"        
+## [10] "Endocrine"           "Immune"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Check for mismatches between tree tips and data}
+\FunctionTok{setdiff}\NormalTok{(tree}\SpecialCharTok{$}\NormalTok{tip.label, summary\_data}\SpecialCharTok{$}\NormalTok{species\_underscored)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Saimiri_sciureus_macrodon"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{setdiff}\NormalTok{(summary\_data}\SpecialCharTok{$}\NormalTok{species\_underscored, tree}\SpecialCharTok{$}\NormalTok{tip.label)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Muusoctopus_aegir" "Neomys_anomalus"   "Neomys_fodiens"   
+## [4] "Saimiri_macrodon"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree }\OtherTok{\textless{}{-}} \FunctionTok{keep.tip}\NormalTok{(tree, }\FunctionTok{intersect}\NormalTok{(tree}\SpecialCharTok{$}\NormalTok{tip.label, summary\_data}\SpecialCharTok{$}\NormalTok{species\_underscored))}
+
+\NormalTok{summary\_data }\OtherTok{\textless{}{-}}\NormalTok{ summary\_data[summary\_data}\SpecialCharTok{$}\NormalTok{species\_underscored }\SpecialCharTok{\%in\%}\NormalTok{ tree}\SpecialCharTok{$}\NormalTok{tip.label, ]}
+
+\CommentTok{\# check again}
+\FunctionTok{setdiff}\NormalTok{(tree}\SpecialCharTok{$}\NormalTok{tip.label, summary\_data}\SpecialCharTok{$}\NormalTok{species\_underscored)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## character(0)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{setdiff}\NormalTok{(summary\_data}\SpecialCharTok{$}\NormalTok{species\_underscored, tree}\SpecialCharTok{$}\NormalTok{tip.label)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## character(0)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Align data and tree}
+\NormalTok{datF }\OtherTok{\textless{}{-}}\NormalTok{ summary\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\StringTok{"species\_underscored"}\NormalTok{)}
+
+\CommentTok{\# Plot with species without names}
+\NormalTok{circ\_names }\OtherTok{\textless{}{-}} \FunctionTok{ggtree}\NormalTok{(tree, }\AttributeTok{layout =} \StringTok{"fan"}\NormalTok{, }\AttributeTok{open.angle =} \DecValTok{18}\NormalTok{, }\AttributeTok{branch.length =} \StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_tiplab}\NormalTok{(}\AttributeTok{offset =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{0}\NormalTok{, }\AttributeTok{size =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Scale for y is already present.
+## Adding another scale for y, which will replace the existing scale.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{circ\_names }\OtherTok{\textless{}{-}} \FunctionTok{rotate\_tree}\NormalTok{(circ\_names, }\DecValTok{90}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Coordinate system already present. Adding new coordinate system, which will
+## replace the existing one.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{circ\_names}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-19-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Plot with species without names}
+\NormalTok{circ }\OtherTok{\textless{}{-}} \FunctionTok{ggtree}\NormalTok{(tree, }\AttributeTok{layout =} \StringTok{"fan"}\NormalTok{, }\AttributeTok{open.angle =} \DecValTok{18}\NormalTok{, }\AttributeTok{branch.length =} \StringTok{"none"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Scale for y is already present.
+## Adding another scale for y, which will replace the existing scale.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{circ }\OtherTok{\textless{}{-}} \FunctionTok{rotate\_tree}\NormalTok{(circ, }\DecValTok{90}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Coordinate system already present. Adding new coordinate system, which will
+## replace the existing one.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{circ}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-19-2.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create a new plot with heatmap for each trait using a single scale}
+\NormalTok{tree\_data }\OtherTok{\textless{}{-}} \FunctionTok{gheatmap}\NormalTok{(}
+\NormalTok{  circ, }
+\NormalTok{  datF, }
+  \AttributeTok{width =} \FloatTok{0.4}\NormalTok{, }
+  \AttributeTok{offset =} \DecValTok{0}\NormalTok{,  }\CommentTok{\# Offset for placing the heatmap}
+  \AttributeTok{colnames\_offset\_x =} \DecValTok{0}\NormalTok{, }
+  \AttributeTok{colnames\_offset\_y =} \DecValTok{0}\NormalTok{, }
+  \AttributeTok{font.size =} \DecValTok{3}\NormalTok{, }
+  \AttributeTok{hjust =} \DecValTok{0}
+\NormalTok{)}
+\NormalTok{tree\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-19-3.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Apply the same scale for all traits}
+\NormalTok{circ\_data }\OtherTok{\textless{}{-}}\NormalTok{ tree\_data }\SpecialCharTok{+} 
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"grey"}\NormalTok{, }\StringTok{"\#009E73"}\NormalTok{), }\AttributeTok{name =} \StringTok{"System measured"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{legend.position =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.56}\NormalTok{, }\FloatTok{0.57}\NormalTok{),  }\CommentTok{\# Posición manual de la leyenda}
+    \AttributeTok{legend.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"transparent"}\NormalTok{, }\AttributeTok{colour =} \ConstantTok{NA}\NormalTok{), }\CommentTok{\# Fondo transparente}
+    \AttributeTok{legend.box.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"transparent"}\NormalTok{, }\AttributeTok{colour =} \ConstantTok{NA}\NormalTok{) }\CommentTok{\# Borde transparente}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Scale for fill is already present.
+## Adding another scale for fill, which will replace the existing scale.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
+## 3.5.0.
+## i Please use the `legend.position.inside` argument of `theme()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{circ\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-19-4.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"../outputs/Figure\_6\_Phylogenetic\_tree\_with\_data.png"}\NormalTok{, circ\_data, }\AttributeTok{width =} \DecValTok{12}\NormalTok{, }\AttributeTok{height =} \DecValTok{12}\NormalTok{, }\AttributeTok{dpi =} \DecValTok{1500}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"../outputs/Figure\_6\_Phylogenetic\_tree\_with\_data.pdf"}\NormalTok{, circ\_data, }\AttributeTok{width =} \DecValTok{12}\NormalTok{, }\AttributeTok{height =} \DecValTok{12}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"../outputs/Figure\_6\_Phylogenetic\_tree\_with\_names.pdf"}\NormalTok{, circ\_names, }\AttributeTok{width =} \DecValTok{12}\NormalTok{, }\AttributeTok{height =} \DecValTok{12}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Figure S2: Number of species by taxonomic group (Class)}\label{figure-s2-number-of-species-by-taxonomic-group-class}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#prepare data for ploting}
+\NormalTok{data\_taxa }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(class) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{unique\_species =} \FunctionTok{n\_distinct}\NormalTok{(species), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}
+    \AttributeTok{cols =} \SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(unique\_species),}
+    \AttributeTok{names\_to =} \StringTok{"variable"}\NormalTok{,}
+    \AttributeTok{values\_to =} \StringTok{"level"}
+\NormalTok{  )}
+
+\CommentTok{\# Create plot with panel borders}
+\NormalTok{Figure\_S2 }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ggplot}\NormalTok{(data\_taxa, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(level, unique\_species), }\AttributeTok{y =}\NormalTok{ unique\_species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#009E73"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \CommentTok{\# Add number of studies inside the bars}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ unique\_species), }
+            \AttributeTok{hjust =} \SpecialCharTok{{-}}\FloatTok{0.15}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_pubr}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{250}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,  }\CommentTok{\# Remove x axis label}
+    \AttributeTok{y =} \StringTok{"Number of species"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{9}\NormalTok{),}
+    \AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{11}\NormalTok{),}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{),}
+    \CommentTok{\# Panel border additions:}
+    \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{),}
+    \AttributeTok{strip.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"gray90"}\NormalTok{, }\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{),}
+    \AttributeTok{panel.spacing =} \FunctionTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{, }\StringTok{"lines"}\NormalTok{)  }\CommentTok{\# Adds space between facets}
+\NormalTok{  )}
+
+\NormalTok{Figure\_S2}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-20-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Store Plots}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_S2\_Species\_by\_class.pdf\textquotesingle{}}\NormalTok{, Figure\_S2, }\AttributeTok{width =} \DecValTok{6}\NormalTok{, }\AttributeTok{height =} \DecValTok{6}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_S2\_Species\_by\_class.png\textquotesingle{}}\NormalTok{, Figure\_S2, }\AttributeTok{width =} \DecValTok{6}\NormalTok{, }\AttributeTok{height =} \DecValTok{6}\NormalTok{, }\AttributeTok{dpi =} \DecValTok{1200}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Figure S3: Number of studies per category of trait (body and organ)}\label{figure-s3-number-of-studies-per-category-of-trait-body-and-organ}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(trait\_size\_category) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{unique\_studies =} \FunctionTok{n\_distinct}\NormalTok{(key), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}
+    \AttributeTok{cols =} \SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(unique\_studies),}
+    \AttributeTok{names\_to =} \StringTok{"variable"}\NormalTok{,}
+    \AttributeTok{values\_to =} \StringTok{"level"}
+\NormalTok{)}
+
+\NormalTok{plot\_data }\OtherTok{\textless{}{-}}\NormalTok{ plot\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{variable =} \FunctionTok{recode}\NormalTok{(variable,}
+                           \AttributeTok{trait\_size\_category =} \StringTok{"Type of organ reported"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(variable, level) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{unique\_studies =} \FunctionTok{sum}\NormalTok{(unique\_studies), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
+
+\CommentTok{\# Create plot with panel borders}
+\NormalTok{Figure\_S3 }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ggplot}\NormalTok{(plot\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(level, unique\_studies), }\AttributeTok{y =}\NormalTok{ unique\_studies)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#009E73"}\NormalTok{, }\AttributeTok{width =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ variable, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_pubr}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{250}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+     \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,  }\CommentTok{\# Remove x axis label}
+    \AttributeTok{y =} \StringTok{"Number of studies"}
+\NormalTok{  ) }\SpecialCharTok{+}
+ \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{9}\NormalTok{),}
+    \AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{),}
+    \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{0.8}\NormalTok{),}
+    \AttributeTok{strip.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#B2ABD270"}\NormalTok{, }\AttributeTok{colour =} \StringTok{"transparent"}\NormalTok{, }\AttributeTok{linewidth =} \DecValTok{0}\NormalTok{),}
+    \AttributeTok{panel.spacing =} \FunctionTok{unit}\NormalTok{(}\DecValTok{1}\NormalTok{, }\StringTok{"lines"}\NormalTok{)}
+\NormalTok{  )}
+
+\NormalTok{Figure\_S3}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{index_files/figure-latex/unnamed-chunk-21-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# \# Store Plots}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_S3\_Studies\_by\_organ.pdf\textquotesingle{}}\NormalTok{, Figure\_S3, }\AttributeTok{width =} \DecValTok{7}\NormalTok{, }\AttributeTok{height =} \DecValTok{7}\NormalTok{)}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{\textquotesingle{}../outputs/Figure\_S3\_Studies\_by\_organ.png\textquotesingle{}}\NormalTok{, Figure\_S3, }\AttributeTok{width =} \DecValTok{7}\NormalTok{, }\AttributeTok{height =} \DecValTok{7}\NormalTok{, }\AttributeTok{dpi =} \DecValTok{1200}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Data for the manuscript}\label{data-for-the-manuscript}
+
+\subsection{Number of species}\label{number-of-species}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{(species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{nrow}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 366
+\end{verbatim}
+
+\subsection{Studies published over years}\label{studies-published-over-years}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_years }\OtherTok{\textless{}{-}}\NormalTok{ refs }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.character}\NormalTok{(year))) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# Convert the \textquotesingle{}year\textquotesingle{} column to numeric}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(year)) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# Remove rows where \textquotesingle{}year\textquotesingle{} is missing (NA)}
+  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{num\_studies =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{cumulative\_studies =} \FunctionTok{cumsum}\NormalTok{(num\_studies))  }\CommentTok{\# Calculate cumulative count}
+
+\DocumentationTok{\#\# Range de years included in the database}
+\NormalTok{df\_years }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{reframe}\NormalTok{(}\AttributeTok{min\_year =} \FunctionTok{min}\NormalTok{(year), }
+          \AttributeTok{max\_year =} \FunctionTok{max}\NormalTok{(year), }
+          \AttributeTok{total\_years =}\NormalTok{ max\_year }\SpecialCharTok{{-}}\NormalTok{ min\_year)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##   min_year max_year total_years
+##      <dbl>    <dbl>       <dbl>
+## 1     1964     2024          60
+\end{verbatim}
+
+\subsection{Number of species by class}\label{number-of-species-by-class}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{table\_sp\_number }\OtherTok{\textless{}{-}}\NormalTok{dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(class) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{reframe}\NormalTok{(}\AttributeTok{n\_spp =} \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(species)), }
+          \AttributeTok{total\_study =} \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(key)),}
+          \AttributeTok{perc\_species =}\NormalTok{ (n\_spp}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{species)))}\SpecialCharTok{*} \DecValTok{100}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(perc\_species))}
+\NormalTok{table\_sp\_number}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 8 x 4
+##   class          n_spp total_study perc_species
+##   <fct>          <int>       <int>        <dbl>
+## 1 Mammalia         227          78       62.0  
+## 2 Aves              71         110       19.4  
+## 3 Actinopterygii    24          29        6.56 
+## 4 Insecta           14           1        3.83 
+## 5 Amphibia          13           6        3.55 
+## 6 Reptilia          12           6        3.28 
+## 7 Chondrichthyes     4           4        1.09 
+## 8 Cephalopoda        1           1        0.273
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# test table kable}
+\FunctionTok{kable}\NormalTok{(table\_sp\_number, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Class"}\NormalTok{, }\StringTok{"N"}\NormalTok{, }\StringTok{"Number of studies"}\NormalTok{, }\StringTok{"Percentage of species"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\StringTok{"striped"}\NormalTok{, }\AttributeTok{position =} \StringTok{"left"}\NormalTok{, }\AttributeTok{full\_width =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{row\_spec}\NormalTok{(}\FunctionTok{which}\NormalTok{(table\_sp\_number}\SpecialCharTok{$}\NormalTok{n\_spp }\SpecialCharTok{==} \StringTok{"TOTAL"}\NormalTok{), }\AttributeTok{bold =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{background =} \StringTok{"\#f5f5f5"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{scroll\_box}\NormalTok{(}\AttributeTok{width =} \StringTok{"100\%"}\NormalTok{, }\AttributeTok{height =} \StringTok{"500px"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabu} to \linewidth {>{\raggedright}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\hline
+Class & N & Number of studies & Percentage of species\\
+\hline
+Mammalia & 227 & 78 & 62.021858\\
+\hline
+Aves & 71 & 110 & 19.398907\\
+\hline
+Actinopterygii & 24 & 29 & 6.557377\\
+\hline
+Insecta & 14 & 1 & 3.825137\\
+\hline
+Amphibia & 13 & 6 & 3.551913\\
+\hline
+Reptilia & 12 & 6 & 3.278688\\
+\hline
+Chondrichthyes & 4 & 4 & 1.092896\\
+\hline
+Cephalopoda & 1 & 1 & 0.273224\\
+\hline
+\end{tabu}
+
+\subsection{Percentage of coverage by organ type}\label{percentage-of-coverage-by-organ-type}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{table\_organ\_type }\OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(trait\_size\_category) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{n\_spp =} \FunctionTok{n\_distinct}\NormalTok{(species),}
+    \AttributeTok{total\_study =} \FunctionTok{n\_distinct}\NormalTok{(key)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{perc\_studies =}\NormalTok{ (total\_study }\SpecialCharTok{/} \FunctionTok{n\_distinct}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{key)) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{,}
+    \AttributeTok{perc\_species =}\NormalTok{ (n\_spp }\SpecialCharTok{/} \FunctionTok{n\_distinct}\NormalTok{(dat}\SpecialCharTok{$}\NormalTok{species)) }\SpecialCharTok{*} \DecValTok{100}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(perc\_studies))}
+
+\CommentTok{\# Select and rename columns for display}
+\NormalTok{table\_show }\OtherTok{\textless{}{-}}\NormalTok{ table\_organ\_type }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}
+    \AttributeTok{Organ =}\NormalTok{ trait\_size\_category,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Number of species}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ n\_spp,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Percentage of species}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ perc\_species,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Number of studies}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ total\_study,}
+    \StringTok{\textasciigrave{}}\AttributeTok{Percentage of studies}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ perc\_studies}
+\NormalTok{    )}
+
+\CommentTok{\# Display the table with kable and kableExtra}
+\FunctionTok{kable}\NormalTok{(table\_show, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\StringTok{"striped"}\NormalTok{, }\AttributeTok{position =} \StringTok{"left"}\NormalTok{, }\AttributeTok{full\_width =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{scroll\_box}\NormalTok{(}\AttributeTok{width =} \StringTok{"100\%"}\NormalTok{, }\AttributeTok{height =} \StringTok{"500px"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabu} to \linewidth {>{\raggedright}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\hline
+Organ & Number of species & Percentage of species & Number of studies & Percentage of studies\\
+\hline
+body size & 366 & 100.00 & 235 & 100.00\\
+\hline
+liver & 171 & 46.72 & 161 & 68.51\\
+\hline
+spleen & 125 & 34.15 & 94 & 40.00\\
+\hline
+heart & 158 & 43.17 & 93 & 39.57\\
+\hline
+kidney & 159 & 43.44 & 80 & 34.04\\
+\hline
+gizzard & 13 & 3.55 & 54 & 22.98\\
+\hline
+lung & 32 & 8.74 & 38 & 16.17\\
+\hline
+bursa & 5 & 1.37 & 36 & 15.32\\
+\hline
+muscle & 21 & 5.74 & 36 & 15.32\\
+\hline
+testes & 21 & 5.74 & 35 & 14.89\\
+\hline
+brain & 165 & 45.08 & 34 & 14.47\\
+\hline
+fat & 12 & 3.28 & 32 & 13.62\\
+\hline
+intestine & 138 & 37.70 & 32 & 13.62\\
+\hline
+thymus & 10 & 2.73 & 32 & 13.62\\
+\hline
+pancreas & 16 & 4.37 & 31 & 13.19\\
+\hline
+stomach & 167 & 45.63 & 29 & 12.34\\
+\hline
+small intestine & 36 & 9.84 & 26 & 11.06\\
+\hline
+caecum & 43 & 11.75 & 25 & 10.64\\
+\hline
+ovary & 14 & 3.83 & 23 & 9.79\\
+\hline
+adrenal glands & 14 & 3.83 & 22 & 9.36\\
+\hline
+proventriculus & 6 & 1.64 & 19 & 8.09\\
+\hline
+duodenum & 5 & 1.37 & 12 & 5.11\\
+\hline
+epididymides & 5 & 1.37 & 11 & 4.68\\
+\hline
+jejunum & 4 & 1.09 & 11 & 4.68\\
+\hline
+ileum & 3 & 0.82 & 10 & 4.26\\
+\hline
+uterus & 4 & 1.09 & 9 & 3.83\\
+\hline
+colon & 21 & 5.74 & 8 & 3.40\\
+\hline
+gonad & 7 & 1.91 & 8 & 3.40\\
+\hline
+thyroid/parathyroid glands & 7 & 1.91 & 7 & 2.98\\
+\hline
+bone & 67 & 18.31 & 6 & 2.55\\
+\hline
+digestive tract & 104 & 28.42 & 5 & 2.13\\
+\hline
+gill & 9 & 2.46 & 5 & 2.13\\
+\hline
+pituitary gland & 7 & 1.91 & 5 & 2.13\\
+\hline
+prostate gland & 4 & 1.09 & 5 & 2.13\\
+\hline
+rectum & 17 & 4.64 & 5 & 2.13\\
+\hline
+ventricle & 5 & 1.37 & 5 & 2.13\\
+\hline
+adipose depot & 100 & 27.32 & 4 & 1.70\\
+\hline
+oviduct & 2 & 0.55 & 4 & 1.70\\
+\hline
+salt gland & 4 & 1.09 & 4 & 1.70\\
+\hline
+esophagus & 14 & 3.83 & 2 & 0.85\\
+\hline
+gut & 2 & 0.55 & 2 & 0.85\\
+\hline
+harderian gland & 2 & 0.55 & 2 & 0.85\\
+\hline
+skeleton & 14 & 3.83 & 2 & 0.85\\
+\hline
+bladder & 1 & 0.27 & 1 & 0.43\\
+\hline
+central nervous system & 14 & 3.83 & 1 & 0.43\\
+\hline
+circulatory system and fat body & 13 & 3.55 & 1 & 0.43\\
+\hline
+digestive system & 13 & 3.55 & 1 & 0.43\\
+\hline
+electric organ & 1 & 0.27 & 1 & 0.43\\
+\hline
+fore limb & 2 & 0.55 & 1 & 0.43\\
+\hline
+hind limb & 2 & 0.55 & 1 & 0.43\\
+\hline
+malpighian tubules & 12 & 3.28 & 1 & 0.43\\
+\hline
+musculature & 13 & 3.55 & 1 & 0.43\\
+\hline
+reproductive system & 13 & 3.55 & 1 & 0.43\\
+\hline
+ureter & 1 & 0.27 & 1 & 0.43\\
+\hline
+\end{tabu}
+
+\section{Export database}\label{export-database}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check names y sselec the most relevamt columns}
+\FunctionTok{names}\NormalTok{(dat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "species_reported"                   "initials"                          
+##  [3] "key"                                "context_study"                     
+##  [5] "taxonomic_group"                    "habitat"                           
+##  [7] "origin"                             "season_of_collection"              
+##  [9] "lat_dec"                            "long_dec"                          
+## [11] "age_years"                          "life_stage_individual"             
+## [13] "sex_individual"                     "id_cluster"                        
+## [15] "trait_size_category"                "weight_status"                     
+## [17] "paired_organs_weighed_individually" "organ_side"                        
+## [19] "trait_details"                      "trait_unit"                        
+## [21] "mean_trait"                         "error_trait"                       
+## [23] "error_type"                         "n_for_mean_trait"                  
+## [25] "additional_trait"                   "data_source"                       
+## [27] "data_doi"                           "relevant_notes"                    
+## [29] "phylum"                             "class"                             
+## [31] "order"                              "family"                            
+## [33] "genus"                              "species"                           
+## [35] "source"                             "taxo_level"                        
+## [37] "species_underscored"                "system"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# slect the most releventa columns and sort where is needed}
+\NormalTok{OrganYsize\_DB\_v1.}\FloatTok{0.0} \OtherTok{\textless{}{-}}\NormalTok{ dat }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\StringTok{"key"}\NormalTok{,}
+         \StringTok{"initials"}\NormalTok{, }\StringTok{"context\_study"}\NormalTok{,}
+         \StringTok{"phylum"}\NormalTok{, }\StringTok{"class"}\NormalTok{, }\StringTok{"order"}\NormalTok{, }\StringTok{"family"}\NormalTok{, }\StringTok{"genus"}\NormalTok{,}\StringTok{"species"}\NormalTok{, }
+         \StringTok{"species\_reported"}\NormalTok{,}\StringTok{"species\_underscored"}\NormalTok{,}
+         \StringTok{"origin"}\NormalTok{, }\StringTok{"habitat"}\NormalTok{,}\StringTok{"season\_of\_collection"}\NormalTok{,}
+         \StringTok{"lat\_dec"}\NormalTok{,}
+         \StringTok{"long\_dec"}\NormalTok{,}
+         \StringTok{"age\_years"}\NormalTok{,}
+         \StringTok{"sex\_individual"}\NormalTok{, }\StringTok{"life\_stage\_individual"}\NormalTok{, }\StringTok{"n\_for\_mean\_trait"}\NormalTok{,}
+         \StringTok{"id\_cluster"}\NormalTok{, }\StringTok{"trait\_size\_category"}\NormalTok{, }
+         \StringTok{"weight\_status"}\NormalTok{,}\StringTok{"paired\_organs\_weighed\_individually"}\NormalTok{, }\StringTok{"organ\_side"}\NormalTok{, }\StringTok{"trait\_details"}\NormalTok{, }\StringTok{"trait\_unit"}\NormalTok{, }
+         \StringTok{"mean\_trait"}\NormalTok{, }\StringTok{"error\_trait"}\NormalTok{, }\StringTok{"error\_type"}\NormalTok{, }
+         \StringTok{"data\_source"}\NormalTok{, }\StringTok{"data\_doi"}\NormalTok{,}
+         \StringTok{"relevant\_notes"}\NormalTok{)}
+
+\CommentTok{\# export file as csv}
+\FunctionTok{write.csv}\NormalTok{(OrganYsize\_DB\_v1.}\FloatTok{0.0}\NormalTok{, }\StringTok{"../outputs/Organ\_Size\_Database\_v1.0.0.csv"}\NormalTok{, }\AttributeTok{row.names =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\#  and excel}
+\NormalTok{writexl}\SpecialCharTok{::}\FunctionTok{write\_xlsx}\NormalTok{(OrganYsize\_DB\_v1.}\FloatTok{0.0}\NormalTok{, }\StringTok{"../outputs/Organ\_Size\_Database\_v1.0.0.xlsx"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Session information}\label{session-information}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{session\_info}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\FunctionTok{details}\NormalTok{(}\AttributeTok{summary =} \StringTok{\textquotesingle{}Current Session Information\textquotesingle{}}\NormalTok{, }\AttributeTok{open =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+{ Current Session Information }
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\SpecialCharTok{{-}}\NormalTok{ Session info }\SpecialCharTok{{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{ setting  value}
+\NormalTok{ version  R version }\DecValTok{4}\NormalTok{.}\FloatTok{3.2}\NormalTok{ (}\DecValTok{2023{-}10{-}31}\NormalTok{)}
+\NormalTok{ os       macOS }\FloatTok{15.5}
+\NormalTok{ system   aarch64, darwin20}
+\NormalTok{ ui       X11}
+ \FunctionTok{language}\NormalTok{ (EN)}
+\NormalTok{ collate  en\_US.UTF}\DecValTok{{-}8}
+\NormalTok{ ctype    en\_US.UTF}\DecValTok{{-}8}
+\NormalTok{ tz       Europe}\SpecialCharTok{/}\NormalTok{Berlin}
+\NormalTok{ date     }\DecValTok{2025{-}06{-}25}
+\NormalTok{ pandoc   }\FloatTok{3.4} \SpecialCharTok{@} \ErrorTok{/}\NormalTok{Applications}\SpecialCharTok{/}\NormalTok{RStudio.app}\SpecialCharTok{/}\NormalTok{Contents}\SpecialCharTok{/}\NormalTok{Resources}\SpecialCharTok{/}\NormalTok{app}\SpecialCharTok{/}\NormalTok{quarto}\SpecialCharTok{/}\NormalTok{bin}\SpecialCharTok{/}\NormalTok{tools}\SpecialCharTok{/}\NormalTok{aarch64}\SpecialCharTok{/}\NormalTok{ (via rmarkdown)}
+\NormalTok{ quarto   }\DecValTok{1}\NormalTok{.}\FloatTok{6.42} \SpecialCharTok{@} \ErrorTok{/}\NormalTok{Applications}\SpecialCharTok{/}\NormalTok{RStudio.app}\SpecialCharTok{/}\NormalTok{Contents}\SpecialCharTok{/}\NormalTok{Resources}\SpecialCharTok{/}\NormalTok{app}\SpecialCharTok{/}\NormalTok{quarto}\SpecialCharTok{/}\NormalTok{bin}\SpecialCharTok{/}\NormalTok{quarto}
+
+\SpecialCharTok{{-}}\NormalTok{ Packages }\SpecialCharTok{{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{ package       }\SpecialCharTok{*}\NormalTok{ version }\FunctionTok{date}\NormalTok{ (UTC) lib source}
+\NormalTok{ abind           }\FloatTok{1.4}\DecValTok{{-}8}   \DecValTok{2024{-}09{-}12}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ ape           }\SpecialCharTok{*} \FloatTok{5.8}\DecValTok{{-}1}   \DecValTok{2024{-}12{-}16}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ aplot           }\DecValTok{0}\NormalTok{.}\FloatTok{2.5}   \DecValTok{2025{-}02{-}27}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ backports       }\DecValTok{1}\NormalTok{.}\FloatTok{5.0}   \DecValTok{2024{-}05{-}23}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ bibtex          }\DecValTok{0}\NormalTok{.}\FloatTok{5.1}   \DecValTok{2023{-}01{-}26}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ bookdown        }\FloatTok{0.43}    \DecValTok{2025{-}04{-}15}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ broom           }\DecValTok{1}\NormalTok{.}\FloatTok{0.8}   \DecValTok{2025{-}03{-}28}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ car             }\FloatTok{3.1}\DecValTok{{-}3}   \DecValTok{2024{-}09{-}27}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ carData         }\FloatTok{3.0}\DecValTok{{-}5}   \DecValTok{2022{-}01{-}06}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ class           }\FloatTok{7.3}\DecValTok{{-}23}  \DecValTok{2025{-}01{-}01}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ classInt        }\FloatTok{0.4}\DecValTok{{-}11}  \DecValTok{2025{-}01{-}08}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ cli             }\DecValTok{3}\NormalTok{.}\FloatTok{6.5}   \DecValTok{2025{-}04{-}23}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ clipr           }\DecValTok{0}\NormalTok{.}\FloatTok{8.0}   \DecValTok{2022{-}02{-}22}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ codetools       }\FloatTok{0.2}\DecValTok{{-}20}  \DecValTok{2024{-}03{-}31}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ cowplot       }\SpecialCharTok{*} \DecValTok{1}\NormalTok{.}\FloatTok{1.3}   \DecValTok{2024{-}01{-}22}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ crayon          }\DecValTok{1}\NormalTok{.}\FloatTok{5.3}   \DecValTok{2024{-}06{-}20}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ data.table      }\DecValTok{1}\NormalTok{.}\FloatTok{17.4}  \DecValTok{2025{-}05{-}26}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ data.tree       }\DecValTok{1}\NormalTok{.}\FloatTok{1.0}   \DecValTok{2023{-}11{-}12}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ DataExplorer  }\SpecialCharTok{*} \DecValTok{0}\NormalTok{.}\FloatTok{8.3}   \DecValTok{2024{-}01{-}24}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ DBI             }\DecValTok{1}\NormalTok{.}\FloatTok{2.3}   \DecValTok{2024{-}06{-}02}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ desc            }\DecValTok{1}\NormalTok{.}\FloatTok{4.3}   \DecValTok{2023{-}12{-}10}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ details       }\SpecialCharTok{*} \DecValTok{0}\NormalTok{.}\FloatTok{4.0}   \DecValTok{2025{-}02{-}09}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ digest          }\DecValTok{0}\NormalTok{.}\FloatTok{6.37}  \DecValTok{2024{-}08{-}19}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ dplyr         }\SpecialCharTok{*} \DecValTok{1}\NormalTok{.}\FloatTok{1.4}   \DecValTok{2023{-}11{-}17}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ e1071           }\FloatTok{1.7}\DecValTok{{-}16}  \DecValTok{2024{-}09{-}16}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ evaluate        }\DecValTok{1}\NormalTok{.}\FloatTok{0.3}   \DecValTok{2025{-}01{-}10}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ farver          }\DecValTok{2}\NormalTok{.}\FloatTok{1.2}   \DecValTok{2024{-}05{-}13}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ fastmap         }\DecValTok{1}\NormalTok{.}\FloatTok{2.0}   \DecValTok{2024{-}05{-}15}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ Formula         }\FloatTok{1.2}\DecValTok{{-}5}   \DecValTok{2023{-}02{-}24}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ fs              }\DecValTok{1}\NormalTok{.}\FloatTok{6.6}   \DecValTok{2025{-}04{-}12}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ generics        }\DecValTok{0}\NormalTok{.}\FloatTok{1.4}   \DecValTok{2025{-}05{-}09}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ ggfun           }\DecValTok{0}\NormalTok{.}\FloatTok{1.8}   \DecValTok{2024{-}12{-}03}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ ggplot2       }\SpecialCharTok{*} \DecValTok{3}\NormalTok{.}\FloatTok{5.2}   \DecValTok{2025{-}04{-}09}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ ggplotify       }\DecValTok{0}\NormalTok{.}\FloatTok{1.2}   \DecValTok{2023{-}08{-}09}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.0}\NormalTok{)}
+\NormalTok{ ggpubr        }\SpecialCharTok{*} \DecValTok{0}\NormalTok{.}\FloatTok{6.0}   \DecValTok{2023{-}02{-}10}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.0}\NormalTok{)}
+\NormalTok{ ggsignif        }\DecValTok{0}\NormalTok{.}\FloatTok{6.4}   \DecValTok{2022{-}10{-}13}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.0}\NormalTok{)}
+\NormalTok{ ggthemes      }\SpecialCharTok{*} \DecValTok{5}\NormalTok{.}\FloatTok{1.0}   \DecValTok{2024{-}02{-}10}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ ggtree        }\SpecialCharTok{*} \DecValTok{3}\NormalTok{.}\FloatTok{10.1}  \DecValTok{2024{-}02{-}27}\NormalTok{ [}\DecValTok{1}\NormalTok{] Bioconductor }\FloatTok{3.18}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.2}\NormalTok{)}
+\NormalTok{ glue            }\DecValTok{1}\NormalTok{.}\FloatTok{8.0}   \DecValTok{2024{-}09{-}30}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ gridExtra       }\FloatTok{2.3}     \DecValTok{2017{-}09{-}09}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ gridGraphics    }\FloatTok{0.5}\DecValTok{{-}1}   \DecValTok{2020{-}12{-}13}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ gtable          }\DecValTok{0}\NormalTok{.}\FloatTok{3.6}   \DecValTok{2024{-}10{-}25}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ htmltools       }\DecValTok{0}\NormalTok{.}\DecValTok{5}\NormalTok{.}\FloatTok{8.1} \DecValTok{2024{-}04{-}04}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ htmlwidgets     }\DecValTok{1}\NormalTok{.}\FloatTok{6.4}   \DecValTok{2023{-}12{-}06}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ httr            }\DecValTok{1}\NormalTok{.}\FloatTok{4.7}   \DecValTok{2023{-}08{-}15}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.0}\NormalTok{)}
+\NormalTok{ igraph          }\DecValTok{2}\NormalTok{.}\FloatTok{1.4}   \DecValTok{2025{-}01{-}23}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ jsonlite        }\DecValTok{2}\NormalTok{.}\FloatTok{0.0}   \DecValTok{2025{-}03{-}27}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ kableExtra    }\SpecialCharTok{*} \DecValTok{1}\NormalTok{.}\FloatTok{4.0}   \DecValTok{2024{-}01{-}24}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ KernSmooth      }\FloatTok{2.23}\DecValTok{{-}26} \DecValTok{2025{-}01{-}01}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ knitr           }\FloatTok{1.50}    \DecValTok{2025{-}03{-}16}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ labeling        }\DecValTok{0}\NormalTok{.}\FloatTok{4.3}   \DecValTok{2023{-}08{-}29}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ lattice         }\FloatTok{0.22}\DecValTok{{-}7}  \DecValTok{2025{-}04{-}02}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ lazyeval        }\DecValTok{0}\NormalTok{.}\FloatTok{2.2}   \DecValTok{2019{-}03{-}15}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ lifecycle       }\DecValTok{1}\NormalTok{.}\FloatTok{0.4}   \DecValTok{2023{-}11{-}07}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ lubridate       }\DecValTok{1}\NormalTok{.}\FloatTok{9.4}   \DecValTok{2024{-}12{-}08}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ magrittr        }\DecValTok{2}\NormalTok{.}\FloatTok{0.3}   \DecValTok{2022{-}03{-}30}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ networkD3       }\DecValTok{0}\NormalTok{.}\FloatTok{4.1}   \DecValTok{2025{-}04{-}14}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ nlme            }\FloatTok{3.1}\DecValTok{{-}168} \DecValTok{2025{-}03{-}31}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ patchwork       }\DecValTok{1}\NormalTok{.}\FloatTok{3.0}   \DecValTok{2024{-}09{-}16}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ pillar          }\DecValTok{1}\NormalTok{.}\FloatTok{10.2}  \DecValTok{2025{-}04{-}05}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ pkgconfig       }\DecValTok{2}\NormalTok{.}\FloatTok{0.3}   \DecValTok{2019{-}09{-}22}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ plyr            }\DecValTok{1}\NormalTok{.}\FloatTok{8.9}   \DecValTok{2023{-}10{-}02}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ png             }\FloatTok{0.1}\DecValTok{{-}8}   \DecValTok{2022{-}11{-}29}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ proxy           }\FloatTok{0.4}\DecValTok{{-}27}  \DecValTok{2022{-}06{-}09}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ purrr           }\DecValTok{1}\NormalTok{.}\FloatTok{0.4}   \DecValTok{2025{-}02{-}05}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ R6              }\DecValTok{2}\NormalTok{.}\FloatTok{6.1}   \DecValTok{2025{-}02{-}15}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ ragg            }\DecValTok{1}\NormalTok{.}\FloatTok{4.0}   \DecValTok{2025{-}04{-}10}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ RColorBrewer    }\FloatTok{1.1}\DecValTok{{-}3}   \DecValTok{2022{-}04{-}03}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ Rcpp            }\DecValTok{1}\NormalTok{.}\FloatTok{0.14}  \DecValTok{2025{-}01{-}12}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ RefManageR    }\SpecialCharTok{*} \DecValTok{1}\NormalTok{.}\FloatTok{4.0}   \DecValTok{2022{-}09{-}30}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.0}\NormalTok{)}
+\NormalTok{ rlang           }\DecValTok{1}\NormalTok{.}\FloatTok{1.6}   \DecValTok{2025{-}04{-}11}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ rmarkdown       }\FloatTok{2.29}    \DecValTok{2024{-}11{-}04}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ rnaturalearth }\SpecialCharTok{*} \DecValTok{1}\NormalTok{.}\FloatTok{0.1}   \DecValTok{2023{-}12{-}15}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ rstatix         }\DecValTok{0}\NormalTok{.}\FloatTok{7.2}   \DecValTok{2023{-}02{-}01}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.0}\NormalTok{)}
+\NormalTok{ rstudioapi      }\DecValTok{0}\NormalTok{.}\FloatTok{17.1}  \DecValTok{2024{-}10{-}22}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ scales          }\DecValTok{1}\NormalTok{.}\FloatTok{4.0}   \DecValTok{2025{-}04{-}24}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ sessioninfo   }\SpecialCharTok{*} \DecValTok{1}\NormalTok{.}\FloatTok{2.3}   \DecValTok{2025{-}02{-}05}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ sf              }\FloatTok{1.0}\DecValTok{{-}21}  \DecValTok{2025{-}05{-}15}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ stringi         }\DecValTok{1}\NormalTok{.}\FloatTok{8.7}   \DecValTok{2025{-}03{-}27}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ stringr       }\SpecialCharTok{*} \DecValTok{1}\NormalTok{.}\FloatTok{5.1}   \DecValTok{2023{-}11{-}14}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ svglite         }\DecValTok{2}\NormalTok{.}\FloatTok{2.1}   \DecValTok{2025{-}05{-}12}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ systemfonts     }\DecValTok{1}\NormalTok{.}\FloatTok{2.3}   \DecValTok{2025{-}04{-}30}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ terra           }\FloatTok{1.8}\DecValTok{{-}50}  \DecValTok{2025{-}05{-}09}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ textshaping     }\DecValTok{1}\NormalTok{.}\FloatTok{0.1}   \DecValTok{2025{-}05{-}01}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ tibble        }\SpecialCharTok{*} \DecValTok{3}\NormalTok{.}\FloatTok{2.1}   \DecValTok{2023{-}03{-}20}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.0}\NormalTok{)}
+\NormalTok{ tidygeocoder  }\SpecialCharTok{*} \DecValTok{1}\NormalTok{.}\FloatTok{0.6}   \DecValTok{2025{-}03{-}31}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ tidyr         }\SpecialCharTok{*} \DecValTok{1}\NormalTok{.}\FloatTok{3.1}   \DecValTok{2024{-}01{-}24}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ tidyselect      }\DecValTok{1}\NormalTok{.}\FloatTok{2.1}   \DecValTok{2024{-}03{-}11}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ tidytree        }\DecValTok{0}\NormalTok{.}\FloatTok{4.6}   \DecValTok{2023{-}12{-}12}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.1}\NormalTok{)}
+\NormalTok{ timechange      }\DecValTok{0}\NormalTok{.}\FloatTok{3.0}   \DecValTok{2024{-}01{-}18}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ treeio          }\DecValTok{1}\NormalTok{.}\FloatTok{26.0}  \DecValTok{2023{-}11{-}06}\NormalTok{ [}\DecValTok{1}\NormalTok{] Bioconductor}
+\NormalTok{ units           }\FloatTok{0.8}\DecValTok{{-}7}   \DecValTok{2025{-}03{-}11}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ utf8            }\DecValTok{1}\NormalTok{.}\FloatTok{2.5}   \DecValTok{2025{-}05{-}01}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ vctrs           }\DecValTok{0}\NormalTok{.}\FloatTok{6.5}   \DecValTok{2023{-}12{-}01}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ viridisLite     }\DecValTok{0}\NormalTok{.}\FloatTok{4.2}   \DecValTok{2023{-}05{-}02}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ withr           }\DecValTok{3}\NormalTok{.}\FloatTok{0.2}   \DecValTok{2024{-}10{-}28}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ writexl         }\DecValTok{1}\NormalTok{.}\FloatTok{5.4}   \DecValTok{2025{-}04{-}15}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ xfun            }\FloatTok{0.52}    \DecValTok{2025{-}04{-}02}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ xml2            }\DecValTok{1}\NormalTok{.}\FloatTok{3.8}   \DecValTok{2025{-}03{-}14}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ yaml            }\DecValTok{2}\NormalTok{.}\FloatTok{3.10}  \DecValTok{2024{-}07{-}26}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+\NormalTok{ yulab.utils     }\DecValTok{0}\NormalTok{.}\FloatTok{2.0}   \DecValTok{2025{-}01{-}29}\NormalTok{ [}\DecValTok{1}\NormalTok{] }\FunctionTok{CRAN}\NormalTok{ (R }\DecValTok{4}\NormalTok{.}\FloatTok{3.3}\NormalTok{)}
+
+\NormalTok{ [}\DecValTok{1}\NormalTok{] }\SpecialCharTok{/}\NormalTok{Library}\SpecialCharTok{/}\NormalTok{Frameworks}\SpecialCharTok{/}\NormalTok{R.framework}\SpecialCharTok{/}\NormalTok{Versions}\SpecialCharTok{/}\FloatTok{4.3}\SpecialCharTok{{-}}\NormalTok{arm64}\SpecialCharTok{/}\NormalTok{Resources}\SpecialCharTok{/}\NormalTok{library}
+ \SpecialCharTok{*} \SpecialCharTok{{-}{-}}\NormalTok{ Packages attached to the search path.}
+
+\SpecialCharTok{{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

@@ -1,0 +1,905 @@
+---
+title: 'A systematic map and comprehensive database of invertebrate and vertebrate organ size'
+author: "Félix P. Leiva"
+date: "latest update: `r format(Sys.time(), '%d %B %Y')`"
+output:
+  bookdown::html_document2:
+    code_folding: hide
+    number_sections: no
+    theme: flatly
+    toc: yes
+    toc_depth: 6
+    toc_float: yes
+  bookdown::pdf_document2:
+    toc: yes
+    toc_depth: 6
+    number_sections: true
+    theme: flatly
+  word_document:
+    toc: yes
+    toc_depth: '4'
+  html_notebook:
+    toc: yes
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '4'
+  bookdown::word_document2:
+    toc: yes
+    toc_depth: 6
+    number_sections: true
+    theme: flatly
+subtitle: Electronic Supplementary Material
+always_allow_html: yes
+---
+
+# Welcome
+
+This R Markdown document summarises the principal the steps to generate figures and tables using data pertaining to organ sizes across vertebrates and invertebrates species. I employed a systematic map to search for information on organ sizes, body sizes, and a set of metadata (see **Figure S1**). This approach facilitates a more comprehensive understanding of the database structure and also, will be serve as backbone for the studying scaling of organ sizes among species.
+
+# Citation
+
+When using the data and/or code associated with this project, they should be cited as follows:
+
+-   Leiva, F. P., Ockhuijsen L., Polinder, J., Schreyers, L., Xiong, J., Hendriks A. J. (2025). A systematic map and comprehensive database of invertebrate and vertebrate organ size. Zenodo. DOI will be available here soon.
+
+# Contact
+
+This script is authored by **Félix P. Leiva**. For any questions related to this resource, please contact me at the email address: [**felixpleiva\@gmail.com**](mailto:felixpleiva@gmail.com).
+
+# Disclaimer
+
+This code routine may contain typographical errors, specific lines of code, or comments in Spanish (my native language). Should you encounter any errors in the code or data, please let me know via email.
+
+# Licence
+
+This repository is provided by the author under the licence [Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en).
+
+# Clean working space
+
+```{r}
+rm(list = ls())
+```
+
+# Load libraries
+
+```{r}
+library(kableExtra)       # Enhances tables created with 'knitr::kable'
+library(DataExplorer)     # Automates exploratory data analysis
+library(dplyr)            # Efficient data manipulation
+library(ggplot2)          # Data visualisation based on the grammar of graphics
+library(RefManageR)       # Manages references and citations
+library(ggpubr)           # Creates publication-ready graphics
+library(cowplot)          # Arranges and annotates plots
+library(tidygeocoder)     # Converts addresses into geographic coordinates
+library(rnaturalearth)    # Accesses Natural Earth geographic data
+library(ape)              # Analyses phylogenies and evolution
+library(ggtree)           # Visualises and annotates phylogenetic trees
+library(tibble)           # Alternative to data frames
+library(ggthemes)         # Additional themes for 'ggplot2' graphics
+library(sessioninfo)      # Documents session environment for reproducibility
+library(details)          # Adds inline or interactive details
+library(stringr)
+library(tidyr)
+```
+
+# Load data
+
+```{r}
+dat <- read.csv("../outputs/organ_size_with_taxonomy.csv")
+```
+
+# Load phylogenetic tree
+
+```{r}
+tree<-read.tree("../outputs/Phylogenetic tree for 363 species.tre")
+```
+
+# Load references
+
+```{r}
+refs <- ReadBib("../outputs/Data used in the DB.bib")
+```
+
+# Overview of screening steps used to select studies included in the organ size database
+
+![**Figure S1.** PRISMA-type diagram showing the systematic and non-systematic literature search reporting organ size and body size pairs data. (\*) We have not received responses from the corresponding author at the time of the manuscript submission.](images/clipboard-375488702.png)
+
+# Data exploration
+
+## Change some species names
+
+```{r}
+# Lets change those names
+
+dat$species[dat$species == "Ateles chamek"]                     <- "Ateles belzebuth chamek"
+dat$species[dat$species == "Leontocebus nigrifrons"]            <- "Saguinus fuscicollis nigrifrons"
+dat$species[dat$species == "Terrapene triunguis"]               <- "Terrapene carolina triunguis"
+dat$species[dat$species == "Anarhynchus alexandrinus"]          <- "Charadrius alexandrinus"
+dat$species[dat$species == "Cebuella pygmaea"]                  <- "Callithrix pygmaea"
+dat$species[dat$species == "Dicotyles tajacu"]                  <- "Pecari tajacu"
+dat$species[dat$species == "Heteromys salvini"]                 <- "Liomys salvini"
+dat$species[dat$species == "Leontocebus fuscicollis"]           <- "Saguinus fuscicollis"
+dat$species[dat$species == "Lithobates pipiens"]                <- "Rana pipiens"
+dat$species[dat$species == "pekania pennanti"]                  <- "Martes pennanti"
+dat$species[dat$species == "Sephanoides sephaniodes"]           <- "Sephanoides sephanoides"
+dat$species[dat$species == "Spodiopsar sericeus"]               <- "Sturnus sericeus"
+dat$species[dat$species == "Pekania pennanti"]                  <- "Martes pennanti"
+dat$species[dat$species == "Saguinus fuscicollis"]              <- "Saguinus fuscicollis fuscicollis"
+dat$species[dat$species == "Presbytis melalophos"]              <- "Presbytis melalophos mitrata"
+dat$species[dat$species == "Eulemur fulvus"]                    <- "Eulemur fulvus fulvus"
+dat$species[dat$species == "Saimiri sciureus"]                  <- "Saimiri sciureus sciureus"
+dat$species[dat$species == "Alouatta seniculus"]                <- "Alouatta seniculus seniculus"
+```
+
+To give an overview and description of the metadata associated with the extraction of organ size and body size data in invertebrates and vertebrates. This table is labeled as **Table S1** in the manuscript.
+
+## Check and reformat variables if is needed
+
+```{r}
+str(dat)
+
+# make a new column of species underscored
+dat$species_underscored <- gsub(" ", "_", dat$species)
+
+# Choosing columns I want to convert to factor
+columns_to_factor <- c(
+  "species_reported", "initials", "key", "context_study", "taxonomic_group",
+  "habitat", "origin", "season_of_collection", "life_stage_individual",
+  "sex_individual", "id_cluster", "trait_size_category", "weight_status",
+  "paired_organs_weighed_individually", "organ_side", "trait_details",
+  "trait_unit", "error_type", "additional_trait", "data_source", "data_doi",
+  "phylum", "class", "order", "family", "genus", "species", "source",
+  "taxo_level", "species_underscored"
+)
+
+# Convert columns to factor
+dat <- dat %>%
+  mutate(across(all_of(columns_to_factor), as.factor))
+
+# Convert column to numeric
+dat <- dat %>%
+  mutate(mean_trait = as.numeric(mean_trait))
+
+# check again
+str(dat)
+```
+
+## Grouping of organs
+
+In the code below, we will attempt to group the different types of organs included in our database to improve visualisation across the various figures. As we see below, there 53 distinct organ types.
+
+```{r}
+# check the organ names
+length(unique(dat$trait_size_category))
+```
+
+However, some of these actually represent the same organ type.
+
+```{r}
+# check the organ names
+unique(dat$trait_size_category)
+```
+
+## System categories
+
+This happened because during data extraction, I retained the original organ names as reported in the studies.
+
+```{r}
+# Add system column using case_when
+dat <- dat %>%
+  mutate(system = case_when(
+    # Digestive system
+    trait_size_category %in% c("liver", "caecum", "intestine", "stomach", 
+                              "digestive tract", "digestive system",
+                              "jejunum", "duodenum", "gizzard", "ileum",
+                              "esophagus", "colon", "rectum", "proventriculus",
+                              "gut", "pancreas") ~ "Digestive",
+    
+    # Excretory system
+    trait_size_category %in% c("kidney", "malpighian tubules", "ureter", 
+                              "bladder") ~ "Excretory",
+    
+    # Circulatory system
+    trait_size_category %in% c("heart", "ventricle", "circulatory system and fat body",
+                              "spleen") ~ "Circulatory",
+    
+    # Immune system
+    trait_size_category %in% c("thymus", "bursa") ~ "Immune",
+    
+    # Nervous system
+    trait_size_category %in% c("brain", "central nervous system", 
+                              "pituitary gland") ~ "Nervous",
+    
+    # Endocrine system
+    trait_size_category %in% c("thyroid/parathyroid glands", "adrenal glands",
+                              "harderian gland", "salt gland") ~ "Endocrine",
+    
+    # Respiratory system
+    trait_size_category %in% c("lung", "gill") ~ "Respiratory",
+    
+    # Reproductive system
+    trait_size_category %in% c("ovary", "testes", "gonad", "uterus", 
+                              "prostate gland", "oviduct", "epididymides",
+                              "reproductive system") ~ "Reproductive",
+    
+    # Musculoskeletal system
+    trait_size_category %in% c("skeleton", "bone", "hind limb", "fore limb",
+                              "muscle", "musculature") ~ "Musculoskeletal",
+    
+    # Adipose/fat storage
+    trait_size_category %in% c("adipose depot", "fat") ~ "Adipose tissue",
+    
+    # Default category for anything not matched
+    TRUE ~ "Body size"
+  ))
+```
+
+```{r}
+# Create summary table with group totals
+summary_table <- dat %>%
+  count(system, trait_size_category) %>%
+  arrange(system, trait_size_category) %>%
+  # Add group totals
+  bind_rows(
+    dat %>%
+      count(system, name = "n") %>%
+      mutate(trait_size_category = "TOTAL") %>%
+      select(system, trait_size_category, n)
+  ) %>%
+  arrange(system, trait_size_category != "TOTAL", trait_size_category)
+
+```
+
+Lets check the grouping
+
+```{r}
+# make a table to see the number of organs measured in each system
+kable(summary_table, col.names = c("System", "Organ", "Count")) %>%
+  kable_styling("striped", position = "left", full_width = TRUE) %>%
+  row_spec(which(summary_table$trait_size_category == "TOTAL"), bold = TRUE, background = "#f5f5f5") %>%
+  scroll_box(width = "100%", height = "500px")
+```
+
+# Figure 1. Cumulative number of studies and most common journals
+
+```{r}
+# Panel A: Extracting and cleaning publication years
+
+df_years <- refs %>%
+  as.data.frame() %>%
+  select(year) %>%
+  mutate(year = as.numeric(as.character(year))) %>%  # Ensure year is numeric
+  filter(!is.na(year))  # Remove NA values
+
+# Counting studies per year and calculating cumulative values:
+studies_per_year <- df_years %>%
+  group_by(year) %>%
+  summarise(num_studies = n()) %>%
+  arrange(year) %>%
+  mutate(cumulative_studies = cumsum(num_studies))  # Calculate cumulative count
+
+# Plotting the cumulative number of studies:
+plot_years <- 
+  ggplot(studies_per_year, aes(x = year, y = cumulative_studies)) +
+  geom_line(color = "#009E73", linewidth = 2) +
+  scale_y_continuous(limits = c(0, 250)) +  # Limit the y-axis to 400
+  scale_x_continuous(
+    limits = c(1955, 2024),
+    breaks = seq(1960, 2024, by = 12)  # Set x-axis intervals to 55 years
+  ) +
+  labs(
+    x = "Publication Year",
+    y = "Number of Studies"
+  ) +
+  theme_pubr() +
+  theme(
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12)
+  )
+# ------------------------------------------------------------------------------
+# lets reformat the names of the journal to have to count them and then plot
+df_journals <- refs %>%
+  as.data.frame() %>%
+  select(journal) %>%
+  filter(!is.na(journal)) %>%
+  mutate(
+    journal_clean = tolower(journal),
+    journal_clean = str_replace_all(journal_clean, "\\\\&", "&"),
+    journal_clean = str_squish(journal_clean),
+    journal_clean = str_to_title(journal_clean),
+    journal_clean = str_replace_all(
+      journal_clean,
+      "\\b(Of|And|In|On|For|The|A|An|To|With|By|At|From|But|Or|Nor)\\b",
+      function(x) tolower(x)
+    ),
+    journal_clean = sub("^([a-z])", toupper("\\1"), journal_clean)
+  ) %>%
+  arrange(desc(journal_clean))
+
+df_journals <- df_journals %>%
+  group_by(journal_clean) %>%
+  summarise(num_articles = n(), .groups = "drop") %>%
+  arrange(desc(num_articles)) %>%
+  slice_head(n = 10)
+  
+```
+
+```{r}
+plot_journals <- ggplot(df_journals, aes(x = reorder(journal_clean, num_articles), y = num_articles)) +
+  geom_bar(stat = "identity", fill = "#009E73", width = 0.7) +
+  scale_y_continuous(limits = c(0, 50)) +
+  coord_flip() +
+  theme_pubr() +
+  labs(
+    x = "Journals",
+    y = "Number of Studies"
+  ) +
+  theme(
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    axis.text.y = element_blank()
+  ) +
+  geom_text(aes(label = journal_clean), hjust = 0, vjust = 0.5, 
+            color = "black", size = 4, check_overlap = TRUE, 
+            position = position_dodge(width = 0.7)) +
+  geom_text(aes(label = num_articles), 
+            hjust = 2, color = "black", size = 4)
+# ------------------------------------------------------------------------------
+# Combining Panel A and Panel B
+Figure_1 <- plot_grid(
+  plot_years, 
+  plot_journals,
+  labels = c("A", "B"),
+  nrow = 2,
+  ncol = 1,
+  label_size = 15,
+  align = "v")
+
+Figure_1
+# Saving the combined figure
+ggsave('../outputs/Figure_1_Studies_and_Journals.pdf', Figure_1, width = 6, height = 9)
+ggsave('../outputs/Figure_1_Studies_and_Journals.png', Figure_1, width = 6, height = 9, dpi = 1200)
+```
+
+# Figure 2: Number of studies by study context, origin and season of collection
+
+```{r}
+# Calculate the number of unique studies by each categorical variable
+plot_data <- dat %>%
+  group_by(context_study, origin, season_of_collection) %>%
+  summarise(unique_studies = n_distinct(key), .groups = "drop") %>%
+  pivot_longer(
+    cols = -c(unique_studies),
+    names_to = "variable",
+    values_to = "level"
+  )
+
+plot_data <- plot_data %>%
+  mutate(variable = recode(variable,
+                           context_study = "Study context",
+                           origin = "Source of specimens",
+                           season_of_collection = "Season of collection")) %>%
+  group_by(variable, level) %>%
+  summarise(unique_studies = sum(unique_studies), .groups = "drop")
+
+# rename the NA level as "not reported"
+plot_data <- plot_data %>%
+  mutate(level = if_else(is.na(level), "not reported", as.character(level)))
+
+#  reorder the levels
+plot_data <- plot_data %>%
+  mutate(
+    variable = factor(
+      variable,
+      levels = c("Study context", "Source of specimens", "Season of collection")
+    )
+  )
+
+Figure_2 <- 
+  ggplot(plot_data, aes(x = reorder(level, unique_studies), y = unique_studies)) +
+  geom_bar(stat = "identity", fill = "#009E73", width = 0.7) +
+  # Add number of studies inside the bars
+  geom_text(aes(label = unique_studies), 
+            hjust = -0.15, color = "black", size = 4) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 250)) +
+  facet_wrap(~ variable, scales = "free_y", ncol = 3) +
+  theme_pubr() +
+  labs(
+    x = NULL,  # Remove x axis label
+    y = "Number of studies"
+  ) +
+  theme(
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    axis.text.y = element_text(size = 9),
+    strip.text = element_text(face = "bold", size = 10),
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.8),
+    strip.background = element_rect(fill = "#B2ABD270", colour = "transparent", linewidth = 0),
+    panel.spacing = unit(1, "lines")
+  )
+
+Figure_2
+
+# # Store Plots
+ggsave('../outputs/Figure_2_Studies_by_Factors.pdf', Figure_2, width = 15/1.2, height = 4/1.2)
+ggsave('../outputs/Figure_2_Studies_by_Factors.png', Figure_2, width = 15/1.2, height = 4/1.2, dpi = 1200)
+```
+
+# Figure 3: Number of studies by habitat, life stage and sex
+
+```{r}
+# Calculate the number of unique studies by each categorical variable
+plot_data <- dat %>%
+  group_by(sex_individual, life_stage_individual, habitat) %>%
+  summarise(unique_studies = n_distinct(key), .groups = "drop") %>%
+  pivot_longer(
+    cols = -c(unique_studies),
+    names_to = "variable",
+    values_to = "level"
+  )
+
+plot_data <- plot_data %>%
+  mutate(variable = recode(variable,
+                           habitat = "Habitat",
+                           sex_individual = "Sex studied",
+                           life_stage_individual = "Life stage studied")) %>%
+  group_by(variable, level) %>%
+  summarise(unique_studies = sum(unique_studies), .groups = "drop")
+
+# rename the NA level as "not reported"
+plot_data <- plot_data %>%
+  mutate(level = if_else(is.na(level), "not reported", as.character(level)))
+
+#  reorder the levels
+plot_data <- plot_data %>%
+  mutate(
+    variable = factor(
+      variable,
+      levels = c("Habitat", "Life stage studied", "Sex studied")
+    )
+  )
+
+Figure_3 <- 
+  ggplot(plot_data, aes(x = reorder(level, unique_studies), y = unique_studies)) +
+  geom_bar(stat = "identity", fill = "#009E73", width = 0.7) +
+  # Add number of studies inside the bars
+  geom_text(aes(label = unique_studies), 
+            hjust = -0.15, color = "black", size = 4) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 300)) +
+  facet_wrap(~ variable, scales = "free_y", ncol = 3) +
+  theme_pubr() +
+  labs(
+    x = NULL,  # Remove x axis label
+    y = "Number of studies"
+  ) +
+  theme(
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    axis.text.y = element_text(size = 9),
+    strip.text = element_text(face = "bold", size = 10),
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.8),
+    strip.background = element_rect(fill = "#B2ABD270", colour = "transparent", linewidth = 0),
+    panel.spacing = unit(1, "lines")
+  )
+
+Figure_3
+
+# # Store Plots
+ggsave('../outputs/Figure_3_Studies_by_Factors.pdf', Figure_3, width = 15/1.5, height = 4/1.5)
+ggsave('../outputs/Figure_3_Studies_by_Factors.png', Figure_3, width = 15/1.5, height = 4/1.5, dpi = 1200)
+```
+
+# Figure 4: Studies by class and most common species in the database
+
+```{r}
+data_studies <- dat %>%
+  group_by(class) %>%
+  summarise(unique_studies = n_distinct(key), .groups = "drop")
+
+Figure_4a <- 
+  ggplot(data_studies, aes(x = reorder(class, unique_studies), y = unique_studies)) +
+  geom_bar(stat = "identity", fill = "#009E73", width = 0.7) +
+  coord_flip() +
+  geom_text(aes(label = unique_studies), hjust = -0.15, color = "black", size = 4) +
+  theme_pubr() +
+  scale_y_continuous(limits = c(0, 150)) +
+  labs(x = NULL, y = "Number of studies") +
+  theme(
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    axis.text.y = element_text(size = 9),
+    strip.text = element_text(face = "bold", size = 11),
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.8),
+    strip.background = element_rect(fill = "#B2ABD270", colour = "black", linewidth = 0.8),
+    panel.spacing = unit(1, "lines")
+  )
+
+# plot most studies species
+plot_data <- dat %>%
+  group_by(species) %>%
+  summarise(num_studies = n_distinct(key), .groups = "drop") %>%
+  arrange(desc(num_studies)) %>%
+  slice_head(n = 10) %>%
+  mutate(
+    # Reemplazar espacio por ~ para que ggplot2 lo interprete bien
+    species_italic = gsub(" ", "~~", species),
+    # Crear expresión para cursiva
+    species_italic = paste0("italic('", gsub(" ", " ", species), "')"),
+    # Alternativamente, para separar género y especie en cursiva sin comillas:
+    species_italic = gsub(" ", "~~", species),
+    species_italic = paste0("italic(", species_italic, ")")
+  )
+
+# Graficar con nombres en cursiva
+Figure_4b <- ggplot(plot_data, aes(x = reorder(species_italic, num_studies), y = num_studies)) +
+  geom_bar(stat = "identity", fill = "#009E73", width = 0.7) +
+  geom_text(aes(label = num_studies), hjust = -0.15, color = "black", size = 4) +
+  coord_flip() +
+  theme_pubr() +
+  scale_y_continuous(limits = c(0, 150)) +
+  labs(x = NULL, y = "Number of studies") +
+  theme(
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    axis.text.y = element_text(size = 9),
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.8)
+  ) +
+  scale_x_discrete(labels = function(x) parse(text = x))
+
+# Combining Panel 4A and Panel 4B
+Figure_4 <- plot_grid(
+  Figure_4a, 
+  Figure_4b,
+  labels = c("A", "B"),
+  nrow = 2,
+  ncol = 1,
+  label_size = 15,
+  align = "v")
+
+Figure_4
+# Store Plots
+ggsave('../outputs/Figure_4_Most_common_species.pdf', Figure_4, width = 6, height = 9)
+ggsave('../outputs/Figure_4_Most_common_species.png', Figure_4, width = 6, height = 9, dpi = 1200)
+```
+
+# Figure 5: Number of studies by system
+
+```{r}
+plot_data <- dat %>%
+  group_by(system) %>%
+  summarise(unique_studies = n_distinct(key), .groups = "drop") %>%
+  pivot_longer(
+    cols = -c(unique_studies),
+    names_to = "variable",
+    values_to = "level"
+)
+
+plot_data <- plot_data %>%
+  mutate(variable = recode(variable,
+                           system = "System studied")) %>%
+  group_by(variable, level) %>%
+  summarise(unique_studies = sum(unique_studies), .groups = "drop")
+
+# Create plot with panel borders
+Figure_5 <- 
+  ggplot(plot_data, aes(x = reorder(level, unique_studies), y = unique_studies)) +
+  geom_bar(stat = "identity", fill = "#009E73", width = 0.7) +
+  coord_flip() +
+  # Add number of studies inside the bars
+  geom_text(aes(label = unique_studies), 
+            hjust = -0.15, color = "black", size = 4) +
+  facet_wrap(~ variable, scales = "free_y", ncol = 1) +
+  theme_pubr() +
+  labs(
+     x = NULL,  # Remove x axis label
+    y = "Number of studies"
+  ) +
+ theme(
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    axis.text.y = element_text(size = 9),
+    strip.text = element_text(face = "bold", size = 12),
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.8),
+    strip.background = element_rect(fill = "#B2ABD270", colour = "transparent", linewidth = 0),
+    panel.spacing = unit(1, "lines")
+  )
+
+Figure_5
+# # Store Plots
+ggsave('../outputs/Figure_5_Studies_by_system.pdf', Figure_5, width = 7, height = 7)
+ggsave('../outputs/Figure_5_Studies_by_system.png', Figure_5, width = 7, height = 7, dpi = 1200)
+```
+
+# Figure 6: Phylogeny of species included in the DB with studies
+
+```{r}
+# Summaries data: calculate the mean value per species for each trait
+names(dat)
+
+summary_data <- dat %>%
+  count(species_underscored, system) %>%  # Count occurrences by species and system
+  mutate(presence = if_else(n > 0, "Yes", "No")) %>%  # Convert counts to "Yes"/"No"
+  select(-n) %>% # Remove the original count column
+  pivot_wider(
+    names_from = system,                   # Each system becomes a column
+    values_from = presence,                # Values are now "Yes" or "No"
+    values_fill = list(presence = "No")    # Fill missing combinations with "No"
+  )
+
+summary_data <- summary_data %>%
+  select(-`Body size`)
+
+names(summary_data)
+
+# Check for mismatches between tree tips and data
+setdiff(tree$tip.label, summary_data$species_underscored)
+setdiff(summary_data$species_underscored, tree$tip.label)
+
+tree <- keep.tip(tree, intersect(tree$tip.label, summary_data$species_underscored))
+
+summary_data <- summary_data[summary_data$species_underscored %in% tree$tip.label, ]
+
+# check again
+setdiff(tree$tip.label, summary_data$species_underscored)
+setdiff(summary_data$species_underscored, tree$tip.label)
+
+# Align data and tree
+datF <- summary_data %>%
+  column_to_rownames("species_underscored")
+
+# Plot with species without names
+circ_names <- ggtree(tree, layout = "fan", open.angle = 18, branch.length = "none") +
+  geom_tiplab(offset = 0.1, hjust = 0, size = 1)
+circ_names <- rotate_tree(circ_names, 90)
+circ_names
+
+# Plot with species without names
+circ <- ggtree(tree, layout = "fan", open.angle = 18, branch.length = "none") 
+circ <- rotate_tree(circ, 90)
+circ
+
+# Create a new plot with heatmap for each trait using a single scale
+tree_data <- gheatmap(
+  circ, 
+  datF, 
+  width = 0.4, 
+  offset = 0,  # Offset for placing the heatmap
+  colnames_offset_x = 0, 
+  colnames_offset_y = 0, 
+  font.size = 3, 
+  hjust = 0
+)
+tree_data
+
+# Apply the same scale for all traits
+circ_data <- tree_data + 
+  scale_fill_manual(values = c("grey", "#009E73"), name = "System measured") +
+  theme(
+    legend.position = c(0.56, 0.57),  # Posición manual de la leyenda
+    legend.background = element_rect(fill = "transparent", colour = NA), # Fondo transparente
+    legend.box.background = element_rect(fill = "transparent", colour = NA) # Borde transparente
+  )
+
+circ_data
+
+
+ggsave("../outputs/Figure_6_Phylogenetic_tree_with_data.png", circ_data, width = 12, height = 12, dpi = 1500)
+ggsave("../outputs/Figure_6_Phylogenetic_tree_with_data.pdf", circ_data, width = 12, height = 12)
+ggsave("../outputs/Figure_6_Phylogenetic_tree_with_names.pdf", circ_names, width = 12, height = 12)
+```
+
+# Figure S2: Number of species by taxonomic group (Class)
+
+```{r}
+#prepare data for ploting
+data_taxa <- dat %>%
+  group_by(class) %>%
+  summarise(unique_species = n_distinct(species), .groups = "drop") %>%
+  pivot_longer(
+    cols = -c(unique_species),
+    names_to = "variable",
+    values_to = "level"
+  )
+
+# Create plot with panel borders
+Figure_S2 <- 
+  ggplot(data_taxa, aes(x = reorder(level, unique_species), y = unique_species)) +
+  geom_bar(stat = "identity", fill = "#009E73", width = 0.7) +
+  coord_flip() +
+  # Add number of studies inside the bars
+  geom_text(aes(label = unique_species), 
+            hjust = -0.15, color = "black", size = 4) +
+  theme_pubr() +
+  scale_y_continuous(limits = c(0, 250)) +
+  labs(
+    x = NULL,  # Remove x axis label
+    y = "Number of species"
+  ) +
+  theme(
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    axis.text.y = element_text(size = 9),
+    strip.text = element_text(face = "bold", size = 11),
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    # Panel border additions:
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.8),
+    strip.background = element_rect(fill = "gray90", colour = "black", linewidth = 0.8),
+    panel.spacing = unit(1, "lines")  # Adds space between facets
+  )
+
+Figure_S2
+# Store Plots
+ggsave('../outputs/Figure_S2_Species_by_class.pdf', Figure_S2, width = 6, height = 6)
+ggsave('../outputs/Figure_S2_Species_by_class.png', Figure_S2, width = 6, height = 6, dpi = 1200)
+```
+
+# Figure S3: Number of studies per category of trait (body and organ)
+
+```{r}
+plot_data <- dat %>%
+  group_by(trait_size_category) %>%
+  summarise(unique_studies = n_distinct(key), .groups = "drop") %>%
+  pivot_longer(
+    cols = -c(unique_studies),
+    names_to = "variable",
+    values_to = "level"
+)
+
+plot_data <- plot_data %>%
+  mutate(variable = recode(variable,
+                           trait_size_category = "Type of organ reported")) %>%
+  group_by(variable, level) %>%
+  summarise(unique_studies = sum(unique_studies), .groups = "drop")
+
+# Create plot with panel borders
+Figure_S3 <- 
+  ggplot(plot_data, aes(x = reorder(level, unique_studies), y = unique_studies)) +
+  geom_bar(stat = "identity", fill = "#009E73", width = 0.7) +
+  coord_flip() +
+  facet_wrap(~ variable, scales = "free_y", ncol = 1) +
+  theme_pubr() +
+  scale_y_continuous(limits = c(0, 250)) +
+  labs(
+     x = NULL,  # Remove x axis label
+    y = "Number of studies"
+  ) +
+ theme(
+    axis.title.x = element_text(face = "bold", size = 12),
+    axis.title.y = element_text(face = "bold", size = 12),
+    axis.text.y = element_text(size = 9),
+    strip.text = element_text(face = "bold", size = 12),
+    plot.title = element_text(face = "bold", hjust = 0.5),
+    panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.8),
+    strip.background = element_rect(fill = "#B2ABD270", colour = "transparent", linewidth = 0),
+    panel.spacing = unit(1, "lines")
+  )
+
+Figure_S3
+# # Store Plots
+ggsave('../outputs/Figure_S3_Studies_by_organ.pdf', Figure_S3, width = 7, height = 7)
+ggsave('../outputs/Figure_S3_Studies_by_organ.png', Figure_S3, width = 7, height = 7, dpi = 1200)
+```
+
+# Data for the manuscript
+
+## Number of species
+
+```{r}
+dat %>%
+  distinct(species) %>%
+  nrow()
+```
+
+## Studies published over years
+
+```{r}
+df_years <- refs %>% 
+  as.data.frame() %>% 
+  select(year) %>% 
+  mutate(year = as.numeric(as.character(year))) %>%  # Convert the 'year' column to numeric
+  filter(!is.na(year)) %>%  # Remove rows where 'year' is missing (NA)
+  group_by(year) %>%
+  summarise(num_studies = n()) %>%
+  arrange(year) %>%
+  mutate(cumulative_studies = cumsum(num_studies))  # Calculate cumulative count
+
+## Range de years included in the database
+df_years %>% 
+  reframe(min_year = min(year), 
+          max_year = max(year), 
+          total_years = max_year - min_year)
+```
+
+## Number of species by class
+
+```{r}
+table_sp_number <-dat %>%
+  group_by(class) %>%
+  reframe(n_spp = length(unique(species)), 
+          total_study = length(unique(key)),
+          perc_species = (n_spp/length(unique(dat$species)))* 100) %>%
+  arrange(desc(perc_species))
+table_sp_number
+
+# test table kable
+kable(table_sp_number, col.names = c("Class", "N", "Number of studies", "Percentage of species")) %>%
+  kable_styling("striped", position = "left", full_width = TRUE) %>%
+  row_spec(which(table_sp_number$n_spp == "TOTAL"), bold = TRUE, background = "#f5f5f5") %>%
+  scroll_box(width = "100%", height = "500px")
+```
+
+## Percentage of coverage by organ type
+
+```{r}
+table_organ_type <- dat %>%
+  group_by(trait_size_category) %>%
+  summarise(
+    n_spp = n_distinct(species),
+    total_study = n_distinct(key)
+  ) %>%
+  mutate(
+    perc_studies = (total_study / n_distinct(dat$key)) * 100,
+    perc_species = (n_spp / n_distinct(dat$species)) * 100
+  ) %>%
+  arrange(desc(perc_studies))
+
+# Select and rename columns for display
+table_show <- table_organ_type %>%
+  select(
+    Organ = trait_size_category,
+    `Number of species` = n_spp,
+    `Percentage of species` = perc_species,
+    `Number of studies` = total_study,
+    `Percentage of studies` = perc_studies
+    )
+
+# Display the table with kable and kableExtra
+kable(table_show, digits = 2) %>%
+  kable_styling("striped", position = "left", full_width = TRUE) %>%
+  scroll_box(width = "100%", height = "500px")
+```
+
+# Export database
+
+```{r}
+# check names y sselec the most relevamt columns
+names(dat)
+
+# slect the most releventa columns and sort where is needed
+OrganYsize_DB_v1.0.0 <- dat %>% 
+  select("key",
+         "initials", "context_study",
+         "phylum", "class", "order", "family", "genus","species", 
+         "species_reported","species_underscored",
+         "origin", "habitat","season_of_collection",
+         "lat_dec",
+         "long_dec",
+         "age_years",
+         "sex_individual", "life_stage_individual", "n_for_mean_trait",
+         "id_cluster", "trait_size_category", 
+         "weight_status","paired_organs_weighed_individually", "organ_side", "trait_details", "trait_unit", 
+         "mean_trait", "error_trait", "error_type", 
+         "data_source", "data_doi",
+         "relevant_notes")
+
+# export file as csv
+write.csv(OrganYsize_DB_v1.0.0, "../outputs/Organ_Size_Database_v1.0.0.csv", row.names = FALSE)
+
+#  and excel
+writexl::write_xlsx(OrganYsize_DB_v1.0.0, "../outputs/Organ_Size_Database_v1.0.0.xlsx")
+```
+
+# Session information
+
+```{r}
+session_info() %>%
+details(summary = 'Current Session Information', open = TRUE)
+```
